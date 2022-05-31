@@ -39,6 +39,14 @@
 	QDEL_NULL(myseed)
 	return ..()
 
+
+/obj/structure/glowshroom/process()
+	if(myseed.get_gene(/datum/plant_gene/trait/glow))
+		var/datum/plant_gene/trait/glow/gene = myseed.get_gene(/datum/plant_gene/trait/glow)
+		for(var/mob/living/mob in view(gene.glow_range(myseed), src))
+			mob.apply_effect(gene.glow_power(myseed), IRRADIATE) //more light - more radiation for everyone!
+
+
 /obj/structure/glowshroom/New(loc, obj/item/seeds/newseed, mutate_stats)
 	..()
 	if(newseed)
