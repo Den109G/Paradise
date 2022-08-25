@@ -45,3 +45,7 @@
 
 /datum/status_effect/high_five/on_remove()
 	owner.visible_message("[owner.name] не дождал[genderize_ru(owner.gender,"ся","ась","ось","ись")] ответа…")
+
+/datum/status_effect/charging
+	id = "charging"
+	alert_type = null

@@ -58,6 +58,7 @@
 	var/total_health = 100
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
+	var/melee_bonus = 0 /// Bonus damage added to melee attacks. NOTE: this is additive rather than multiplicative, trying to multiply this will break things.
 	var/punchstunthreshold = 9	 //damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/list/default_genes = list()
 
@@ -412,7 +413,7 @@
 		if((NO_BLOOD in target.dna.species.species_traits) || target.dna.species.exotic_blood || !target.blood_volume)
 			to_chat(user, "<span class='warning'>Отсутствует кровь!</span>")
 			return
-		if(target.mind && target.mind.vampire && (target.mind in SSticker.mode.vampires))
+		if(target.mind && (target.mind.has_antag_datum(/datum/vampire) || target.mind.has_antag_datum(/datum/antagonist/mindslave/thrall)))
 			to_chat(user, "<span class='warning'>[pluralize_ru(user.gender,"Твои","Ваши")] клыки не могут пронзить холодную плоть [target.declent_ru(GENITIVE)].</span>")
 			return
 		if(SKELETON in target.mutations)
@@ -456,6 +457,7 @@
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 		damage += attack.damage
+		damage += user.dna.species.melee_bonus
 		if(!damage)
 			playsound(target.loc, attack.miss_sound, 25, 1, -1)
 			target.visible_message("<span class='danger'>[user.declent_ru(NOMINATIVE)] [attack_species] [target.declent_ru(ACCUSATIVE)], но промахива[pluralize_ru(user.gender,"ется","ются")]!</span>")
@@ -799,13 +801,18 @@ It'll return null if the organ doesn't correspond, so include null checks when u
 		if(A.update_remote_sight(H)) //returns 1 if we override all other sight updates.
 			return
 
-	if(H.mind && H.mind.vampire)
-		if(H.mind.vampire.get_ability(/datum/vampire_passive/full))
+	if(H.mind?.vampire)
+		if(H.mind.vampire.get_ability(/datum/vampire_passive/xray))
 			H.sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-			H.see_in_dark = 8
+			H.see_in_dark += 8
+			H.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		else if(H.mind.vampire.get_ability(/datum/vampire_passive/full))
+			H.sight |= SEE_MOBS
+			H.see_in_dark += 8
 			H.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		else if(H.mind.vampire.get_ability(/datum/vampire_passive/vision))
 			H.sight |= SEE_MOBS
+			H.see_in_dark += 1 // base of 2, 2+1 is 3
 			H.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 	for(var/obj/item/organ/internal/cyberimp/eyes/E in H.internal_organs)

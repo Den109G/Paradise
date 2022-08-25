@@ -33,6 +33,10 @@
 
 #define STATUS_EFFECT_BLOODDRUNK /datum/status_effect/blooddrunk //Stun immunity and greatly reduced damage taken
 
+#define STATUS_EFFECT_BLOOD_SWELL /datum/status_effect/bloodswell //stun resistance and halved damage for gargantua vampires
+
+#define STATUS_EFFECT_BLOOD_RUSH /datum/status_effect/blood_rush // speed boost for gargantua vampires
+
 /////////////
 // DEBUFFS //
 /////////////
@@ -63,6 +67,7 @@
 
 #define STATUS_EFFECT_STAMINADOT /datum/status_effect/stamina_dot
 
+#define STATUS_EFFECT_PACIFIED /datum/status_effect/pacifism //forces the pacifism trait
 //#define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
 //#define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
 //#define CURSE_SPAWNING	2 //spawns creatures that attack the target only
@@ -78,6 +83,8 @@
 /////////////
 
 #define STATUS_EFFECT_HIGHFIVE /datum/status_effect/high_five
+
+#define STATUS_EFFECT_CHARGING /datum/status_effect/charging
 
 //#define STATUS_EFFECT_SIGILMARK /datum/status_effect/sigil_mark
 

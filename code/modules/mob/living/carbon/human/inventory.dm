@@ -151,7 +151,6 @@
 			update_head_accessory()
 		if(internal && !get_organ_slot("breathing_tube"))
 			internal = null
-			update_action_buttons_icon()
 		wear_mask_update(I, toggle_off = FALSE)
 		sec_hud_set_ID()
 		update_inv_wear_mask()
@@ -180,6 +179,7 @@
 	else if(I == l_hand)
 		l_hand = null
 		update_inv_l_hand()
+	update_action_buttons_icon()
 
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()

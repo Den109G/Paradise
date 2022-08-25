@@ -1,43 +1,39 @@
 // trait accessor defines
+#define SIGNAL_ADDTRAIT(trait_ref) "addtrait [trait_ref]"
+#define SIGNAL_REMOVETRAIT(trait_ref) "removetrait [trait_ref]"
+
 #define ADD_TRAIT(target, trait, source) \
 	do { \
-		var/list/_L; \
-		if (!target.status_traits) { \
-			target.status_traits = list(); \
-			_L = target.status_traits; \
-			_L[trait] = list(source); \
+		LAZYINITLIST(target.status_traits); \
+\
+		if(!target.status_traits[trait]) { \
+			target.status_traits[trait] = list(source); \
 		} else { \
-			_L = target.status_traits; \
-			if (_L[trait]) { \
-				_L[trait] |= list(source); \
-			} else { \
-				_L[trait] = list(source); \
+			target.status_traits[trait] |= list(source); \
+		} \
+\
+		SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
+	} while (0)
+
+#define REMOVE_TRAIT(target, trait, sources) \
+	do { \
+		if(target.status_traits && target.status_traits[trait]) { \
+			var/list/SOURCES = sources; \
+			if(sources && !islist(sources)) { \
+				SOURCES = list(sources); \
+			} \
+\
+			for(var/TRAIT_SOURCE in target.status_traits[trait]) { \
+				if((!SOURCES && (TRAIT_SOURCE != ROUNDSTART_TRAIT)) || (TRAIT_SOURCE in SOURCES)) { \
+					if(length(target.status_traits[trait]) == 1) { \
+						SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
+					} \
+					LAZYREMOVEASSOC(target.status_traits, trait, TRAIT_SOURCE); \
+				} \
 			} \
 		} \
 	} while (0)
-#define REMOVE_TRAIT(target, trait, sources) \
-	do { \
-		var/list/_L = target.status_traits; \
-		var/list/_S; \
-		if (sources && !islist(sources)) { \
-			_S = list(sources); \
-		} else { \
-			_S = sources\
-		}; \
-		if (_L && _L[trait]) { \
-			for (var/_T in _L[trait]) { \
-				if ((!_S && (_T != ROUNDSTART_TRAIT)) || (_T in _S)) { \
-					_L[trait] -= _T \
-				} \
-			};\
-			if (!length(_L[trait])) { \
-				_L -= trait \
-			}; \
-			if (!length(_L)) { \
-				target.status_traits = null \
-			}; \
-		} \
-	} while (0)
+
 #define REMOVE_TRAITS_NOT_IN(target, sources) \
 	do { \
 		var/list/_L = target.status_traits; \
@@ -53,6 +49,31 @@
 				};\
 		}\
 	} while (0)
+
+#define REMOVE_TRAITS_IN(target, sources) \
+	do { \
+		if(target.status_traits) { \
+			var/list/SOURCES = sources; \
+			if(!islist(sources)) { \
+				SOURCES = list(sources); \
+			} \
+\
+			for(var/TRAIT in target.status_traits) { \
+				if(!target.status_traits[TRAIT]) \
+					continue; \
+				target.status_traits[TRAIT] -= SOURCES; \
+				if(!length(target.status_traits[TRAIT])) { \
+					target.status_traits -= TRAIT; \
+					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(TRAIT)); \
+					if(!target.status_traits) \
+						break; \
+				} \
+			} \
+			if(!length(target.status_traits)) { \
+				target.status_traits = null; \
+			} \
+		} \
+	} while (0)
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
 
@@ -66,6 +87,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOODCRAWL		"bloodcrawl"
 #define TRAIT_BLOODCRAWL_EAT	"bloodcrawl_eat"
 #define TRAIT_JESTER			"jester"
+#define TRAIT_FORCE_DOORS "force_doors"
+#define VAMPIRE_TRAIT "vampire"
 
 //
 // common trait sources

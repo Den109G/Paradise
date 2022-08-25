@@ -121,3 +121,15 @@
 
 /datum/status_effect/stamina_dot/tick()
 	owner.adjustStaminaLoss(10)
+
+/datum/status_effect/pacifism
+	id = "pacifism_debuff"
+	alert_type = null
+	duration = 40 SECONDS
+
+/datum/status_effect/pacifism/on_apply()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
+	return ..()
+
+/datum/status_effect/pacifism/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
