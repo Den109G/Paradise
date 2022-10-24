@@ -59,7 +59,6 @@
 	volume = 80
 
 /obj/item/reagent_containers/spray/alien/stun/afterattack(atom/A as mob|obj, mob/user as mob)
-	..()
 	reagents.remove_reagent(reagents.get_master_reagent_id(),25)
 	var/location = get_turf(user)
 	var/datum/reagents/reagents_list = new
