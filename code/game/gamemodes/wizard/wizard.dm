@@ -255,7 +255,7 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/teleportation_scroll(wizard_mob), slot_r_store)
 	var/obj/item/contract/apprentice_choose_book/apprentice_book = new /obj/item/contract/apprentice_choose_book(wizard_mob)
 	apprentice_book.owner = wizard_mob
-	wizard_mob.equip_to_slot_or_del(apprentice_book, slot_l_hand)
+	wizard_mob.put_in_any_hand_if_possible(apprentice_book)
 
 	wizard_mob.faction = list("wizard")
 
