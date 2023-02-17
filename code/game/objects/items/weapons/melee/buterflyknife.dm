@@ -12,10 +12,13 @@
 	var/backstab_cooldown = 0
 	var/icon_state_on = "telebaton_1"
 	var/icons_state_off = "telebaton_0"
+	icon_state = "telebaton_0"
 	var/icon_off = null
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = null // Probably more appropriate than the previous hitsound. -- Dave
 	usesound = 'sound/weapons/blade_sheath.ogg'
+	name = "pocket knife"
+	var/name_off = "item"
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
@@ -27,7 +30,7 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item
 	chameleon_action.chameleon_name = "item"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item))
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing))
 	chameleon_action.initialize_disguises()
 
 /obj/item/melee/butterfly/attack_self(mob/living/carbon/user)
@@ -40,6 +43,9 @@
 		throwforce = throwforce_on
 		icons_state_off = icon_state
 		icon_off = icon
+		icon = initial(icon)
+		name_off = name
+		name = initial(name)
 		icon_state = icon_state_on
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		throw_speed = 4
@@ -59,7 +65,6 @@
 		icon = icon_off
 		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
-		set_light(0)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
