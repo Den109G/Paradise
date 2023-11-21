@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(shard_spells, list(
 // amount of metal per brass
 #define CLOCK_METAL_TO_BRASS 10
 //Cogscarab: a wind up timer of how long can droney live without beacon
-#define CLOCK_MAX_WIND_UP_TIMER 1500000000000000000000000000
+#define CLOCK_MAX_WIND_UP_TIMER 150
 
 // Clockwork Status
 /// At what population does it switch to highpop values
