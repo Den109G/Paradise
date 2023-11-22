@@ -153,7 +153,7 @@
 /datum/nttc_configuration/proc/update_languages()
 	for(var/language in GLOB.all_languages)
 		var/datum/language/L = GLOB.all_languages[language]
-		if(L.flags & HIVEMIND)
+		if(L.flags & HIVEMIND || L.flags & NO_TALK_MSG)
 			continue
 		valid_languages[language] = TRUE
 
