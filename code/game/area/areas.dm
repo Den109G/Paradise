@@ -553,25 +553,6 @@
 
 	to_chat(user, "Gravity!")
 
-
-/proc/has_gravity(atom/our_atom, turf/our_turf)
-	if(!our_turf)
-		our_turf = get_turf(our_atom)
-
-	var/area/our_area = get_area(our_turf)
-
-	if(isspaceturf(our_turf)) // Turf never has gravity
-		return FALSE
-	else if(our_area?.has_gravity) // Areas which always has gravity
-		return TRUE
-	else
-		// There's a gravity generator on our z level
-		// This would do well when integrated with the z level manager
-		if(our_turf && GLOB.gravity_generators["[our_turf.z]"] && length(GLOB.gravity_generators["[our_turf.z]"]))
-			return TRUE
-	return FALSE
-
-
 /area/proc/prison_break()
 	for(var/obj/machinery/power/apc/temp_apc in machinery_cache)
 		INVOKE_ASYNC(temp_apc, TYPE_PROC_REF(/obj/machinery/power/apc, overload_lighting), 70)

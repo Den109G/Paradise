@@ -328,7 +328,7 @@
 
 
 /mob/proc/mob_has_gravity(turf/T)
-	return has_gravity(src, T)
+	return has_gravity(T)
 
 /mob/proc/mob_negates_gravity()
 	return 0

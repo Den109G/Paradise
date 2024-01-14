@@ -295,7 +295,7 @@
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0	//We start at 0.
 
-	if(has_gravity(H))
+	if(H.has_gravity())
 		if(HAS_TRAIT(H, TRAIT_GOTTAGOFAST))
 			. -= 1
 		else if(HAS_TRAIT(H, TRAIT_GOTTAGONOTSOFAST))
