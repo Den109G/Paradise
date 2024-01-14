@@ -777,7 +777,7 @@
 	AddComponent(/datum/component/caltrop, force)
 
 /obj/item/light/Crossed(mob/living/L)
-	if(istype(L) && has_gravity(loc))
+	if(istype(L) && has_gravity())
 		if(L.incorporeal_move || L.flying || L.floating)
 			return
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, TRUE)

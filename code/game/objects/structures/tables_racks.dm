@@ -452,7 +452,7 @@
 /obj/structure/table/glass/proc/check_break(mob/living/M)
 	if(M.flying || M.incorporeal_move)
 		return
-	if(has_gravity(M) && M.mob_size > MOB_SIZE_SMALL)
+	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL)
 		table_shatter(M)
 
 /obj/structure/table/glass/flip(direction)
