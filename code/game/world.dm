@@ -322,3 +322,8 @@ GLOBAL_LIST_EMPTY(world_topic_handlers)
 	var/init_result = CALL_EXT(library, "init")()
 	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
+
+/world/proc/incrementMaxZ()
+	maxz++
+	SSmobs.MaxZChanged()
+	SSidlenpcpool.MaxZChanged()

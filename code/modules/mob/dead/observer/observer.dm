@@ -145,7 +145,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
-	return 1
+	return TRUE
 
 
 /*
