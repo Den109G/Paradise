@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
 	interact_offline = 1
-	var/on = 1
+	var/on = TRUE
 	var/breaker = 1
 	var/list/parts = list()
 	var/obj/middle = null
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
-	on = 0
+	on = FALSE
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	charge_count = 0
 	breaker = 0
 	set_power()
-	set_state(0)
+	set_state(FALSE)
 	investigate_log("has broken down.", INVESTIGATE_GRAVITY)
 
 /obj/machinery/gravity_generator/main/set_fix()
@@ -331,9 +331,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		return
 	if(charging_state != GRAV_POWER_IDLE)
 		if(charging_state == GRAV_POWER_UP && charge_count >= 100)
-			set_state(1)
+			set_state(TRUE)
 		else if(charging_state == GRAV_POWER_DOWN && charge_count <= 0)
-			set_state(0)
+			set_state(FALSE)
 		else
 			if(charging_state == GRAV_POWER_UP)
 				charge_count += 2

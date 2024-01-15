@@ -21,12 +21,12 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/aiEye/setLoc(T)
+/mob/camera/aiEye/setLoc(turf/destination, force_update = FALSE)
 	if(ai)
 		if(!isturf(ai.loc))
 			return
-		T = get_turf(T)
-		loc = T
+		destination = get_turf(destination)
+		loc = destination
 		if(use_static)
 			ai.camera_visibility(src)
 		if(ai.client)
@@ -35,7 +35,7 @@
 		//Holopad
 		if(istype(ai.current, /obj/machinery/hologram/holopad))
 			var/obj/machinery/hologram/holopad/H = ai.current
-			H.move_hologram(ai, T)
+			H.move_hologram(ai, destination)
 
 /mob/camera/aiEye/Move()
 	return 0

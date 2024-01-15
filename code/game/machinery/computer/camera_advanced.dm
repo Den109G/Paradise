@@ -133,12 +133,12 @@
 		return eye_user.client
 	return null
 
-/mob/camera/aiEye/remote/setLoc(T)
+/mob/camera/aiEye/remote/setLoc(turf/destination, force_update = FALSE)
 	if(eye_user)
 		if(!isturf(eye_user.loc))
 			return
-		T = get_turf(T)
-		loc = T
+		destination = get_turf(destination)
+		loc = destination
 		if(use_static)
 			GLOB.cameranet.visibility(src, GetViewerClient())
 		if(visible_icon)

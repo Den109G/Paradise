@@ -1,5 +1,6 @@
 /obj
 	//var/datum/module/mod		//not used
+	var/obj_flags
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/crit_fail = FALSE
 	animate_movement = 2

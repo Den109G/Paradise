@@ -540,6 +540,30 @@
 /turf/AllowDrop()
 	return TRUE
 
+/turf/proc/zPassIn(atom/movable/A, direction, turf/source)
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_DOWN)
+				return FALSE
+		return TRUE
+	return FALSE
+
+//direction is direction of travel of A
+/turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_UP)
+				return FALSE
+		return TRUE
+	return FALSE
+
+//direction is direction of travel of air
+/turf/proc/zAirIn(direction, turf/source)
+	return (direction == DOWN)
+
+//direction is direction of travel of air
+/turf/proc/zAirOut(direction, turf/source)
+	return (direction == UP)
 
 /**
  * Returns adjacent turfs to this turf that are reachable, in all cardinal directions

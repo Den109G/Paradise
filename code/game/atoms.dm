@@ -104,7 +104,7 @@
 
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/Initialize
-// /turf/open/space/Initialize
+// /turf/simulated/space/Initialize
 
 /atom/proc/Initialize(mapload, ...)
 	SHOULD_CALL_PARENT(TRUE)
@@ -1315,7 +1315,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return FALSE
-	if(istype(T, /turf/space/openspace)) //openspace in a space area doesn't get gravity
+	if(istype(T, /turf/simulated/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
 			return FALSE
 	var/area/A = get_area(T)
@@ -1327,4 +1327,4 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
 				if(G.on)
 					return TRUE
-	return FALSE
+	return check_level_trait(T.z, ZTRAIT_GRAVITY)

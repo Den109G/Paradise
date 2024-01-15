@@ -14,6 +14,8 @@ SUBSYSTEM_DEF(mapping)
 	///What primary cave theme we have picked for cave generation today.
 	var/cave_theme
 
+	///list of lists, inner lists are of the form: list("up or down link direction" = TRUE)
+	var/list/multiz_levels = list()
 
 // This has to be here because world/New() uses [station_name()], which looks this datum up
 /datum/controller/subsystem/mapping/PreInit()
@@ -145,12 +147,12 @@ SUBSYSTEM_DEF(mapping)
 		if(map_datum_path)
 			map_datum = new map_datum_path
 		else
-			to_chat(world, "<span class='narsie'>ERROR: The map datum specified to load is invalid. Falling back to... delta probably?</span>")
+			to_chat(world, "<span class='danger'>ERROR: The map datum specified to load is invalid. Falling back to... delta probably?</span>")
 
 	ASSERT(map_datum.map_path)
 	if(!fexists(map_datum.map_path))
 		// Make a VERY OBVIOUS error
-		to_chat(world, "<span class='narsie'>ERROR: The path specified for the map to load is invalid. No station has been loaded!</span>")
+		to_chat(world, "<span class='userdanger'>ERROR: The path specified for the map to load is invalid. No station has been loaded!</span>")
 		return
 
 	var/watch = start_watch()
@@ -173,7 +175,7 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/loadLavaland()
 	var/watch = start_watch()
 	log_startup_progress("Loading Lavaland...")
-	var/lavaland_z_level = GLOB.space_manager.add_new_zlevel(MINING, linkage = SELFLOOPING, traits = list(ORE_LEVEL, REACHABLE, STATION_CONTACT, HAS_WEATHER, AI_OK))
+	var/lavaland_z_level = GLOB.space_manager.add_new_zlevel(MINING, linkage = UNAFFECTED, traits = list(ORE_LEVEL, REACHABLE, STATION_CONTACT, HAS_WEATHER, AI_OK))
 	GLOB.maploader.load_map(file(map_datum.lavaland_path), z_offset = lavaland_z_level)
 	log_startup_progress("Loaded Lavaland in [stop_watch(watch)]s")
 

@@ -10,8 +10,8 @@
 	allowed_area = A.name
 	..()
 
-/mob/camera/aiEye/remote/xenobio/setLoc(t)
-	var/area/new_area = get_area(t)
+/mob/camera/aiEye/remote/xenobio/setLoc(turf/destination, force_update = FALSE)
+	var/area/new_area = get_area(destination)
 	if(new_area && new_area.name == allowed_area ||  new_area && new_area.xenobiology_compatible)
 		return ..()
 	else
