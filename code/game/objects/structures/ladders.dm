@@ -32,19 +32,20 @@
 /obj/structure/ladder/LateInitialize()
 	// By default, discover ladders above and below us vertically
 	var/turf/T = get_turf(src)
+	var/obj/structure/ladder/L
 
 	if(!down)
-		for(var/obj/structure/ladder/L in locate(T.x, T.y, T.z - 1))
+		L = locate() in GET_TURF_BELOW(T)
+		if(L)
 			down = L
 			L.up = src  // Don't waste effort looping the other way
 			L.update_icon()
-			break
 	if(!up)
-		for (var/obj/structure/ladder/L in locate(T.x, T.y, T.z + 1))
+		L = locate() in GET_TURF_ABOVE(T)
+		if(L)
 			up = L
 			L.down = src  // Don't waste effort looping the other way
 			L.update_icon()
-			break
 
 	update_icon()
 
@@ -82,14 +83,9 @@
 			return
 		show_fluff_message(going_up, user)
 
-	var/turf/T = get_turf(ladder)
-	var/atom/movable/AM
-	if(user.pulling)
-		AM = user.pulling
-		AM.forceMove(T)
-	user.forceMove(T)
-	if(AM)
-		user.start_pulling(AM)
+	var/turf/target = get_turf(ladder)
+	user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
+	ladder.use(user) //reopening ladder radial menu ahead
 
 /obj/structure/ladder/proc/use(mob/user, is_ghost = FALSE)
 	if(!is_ghost && !in_range(src, user))

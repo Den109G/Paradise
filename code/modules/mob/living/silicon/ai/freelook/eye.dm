@@ -40,6 +40,15 @@
 /mob/camera/aiEye/Move()
 	return 0
 
+/mob/camera/ai_eye/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
+	. = ..()
+	if(.)
+		setLoc(loc)
+
+/mob/camera/ai_eye/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	z_move_flags |= ZMOVE_IGNORE_OBSTACLES  //cameras do not respect these FLOORS you speak so much of
+	return ..()
+
 /mob/camera/aiEye/proc/GetViewerClient()
 	if(ai)
 		return ai.client
@@ -141,6 +150,21 @@
 		return //won't work if dead
 	acceleration = !acceleration
 	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
+
+/mob/living/silicon/ai/up()
+	set name = "Move Upwards"
+	set category = "IC"
+
+	if(eyeobj.zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
+		to_chat(src, span_notice("You move upwards."))
+
+/mob/living/silicon/ai/down()
+	set name = "Move Down"
+	set category = "IC"
+
+	if(eyeobj.zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
+		to_chat(src, span_notice("You move down."))
+
 
 /mob/camera/aiEye/hear_say(list/message_pieces, verb = "says", italics = 0, mob/speaker = null, sound/speech_sound, sound_vol, sound_frequency, use_voice = TRUE)
 	if(relay_speech)

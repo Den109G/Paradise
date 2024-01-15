@@ -136,13 +136,13 @@
 
 	if(destination_z && destination_x && destination_y)
 		destination_z = check_taipan_availability(A, destination_z)
-		A.forceMove(locate(destination_x, destination_y, destination_z))
+		A.zMove(null, locate(destination_x, destination_y, destination_z), ZMOVE_ALLOW_BUCKLED)
 
 		if(isliving(A))
 			var/mob/living/L = A
 			if(L.pulling)
 				var/turf/T = get_step(L.loc,turn(A.dir, 180))
-				L.pulling.forceMove(T)
+				L.pulling.zMove(null, T, ZMOVE_ALLOW_BUCKLED)
 
 		//now we're on the new z_level, proceed the space drifting
 		spawn(0)//Let a diagonal move finish, if necessary

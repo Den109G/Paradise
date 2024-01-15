@@ -37,7 +37,7 @@
 	if(. && !movable)
 		anchored = TRUE
 
-/obj/structure/chair/unbuckle_mob(mob/living/buckled_mob, force)
+/obj/structure/chair/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
 	anchored = initial(anchored)
 	. = ..()
 

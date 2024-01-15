@@ -121,7 +121,7 @@ SUBSYSTEM_DEF(mapping)
 	// load in extra levels of space ruins
 	var/load_zlevels_timer = start_watch()
 	log_startup_progress("Creating random space levels...")
-	var/num_extra_space = rand(CONFIG_GET(number/extra_space_ruin_levels_min), CONFIG_GET(number/extra_space_ruin_levels_max))
+	var/num_extra_space = SPACE_RUINS_NUMBER
 	for(var/i in 1 to num_extra_space)
 		GLOB.space_manager.add_new_zlevel("Ruin Area #[i]", linkage = CROSSLINKED, traits = list(REACHABLE, SPAWN_RUINS))
 	log_startup_progress("Loaded random space levels in [stop_watch(load_zlevels_timer)]s.")
@@ -158,8 +158,33 @@ SUBSYSTEM_DEF(mapping)
 	var/watch = start_watch()
 	log_startup_progress("Loading [map_datum.station_name]...")
 	// This should always be Z3, but you never know
-	var/map_z_level = GLOB.space_manager.add_new_zlevel(MAIN_STATION, linkage = CROSSLINKED, traits = list(STATION_LEVEL, STATION_CONTACT, REACHABLE, AI_OK))
-	GLOB.maploader.load_map(wrap_file(map_datum.map_path), z_offset = map_z_level)
+	var/s_traits = list(STATION_LEVEL, STATION_CONTACT, REACHABLE, AI_OK)
+	var/map_z_level
+	if(map_datum.multiz)
+		s_traits += ZTRAIT_UP //Giving to first zlevel, where the map will load.
+		map_z_level = GLOB.space_manager.add_new_zlevel(MAIN_STATION + "#1", linkage = CROSSLINKED, traits = s_traits)
+		if(multiz_levels.len < map_z_level)
+			multiz_levels.len = map_z_level //sucks
+		multiz_levels[map_z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
+		multiz_levels[map_z_level][Z_LEVEL_UP] = TRUE
+		if(map_datum.multiz > MULTIZ_WARN)
+			WARNING("Loading station with over [MULTIZ_WARN] levels. May cause some issues with space levels and/or perfomance on server.")
+
+		// creating more PROPER z levels. maploader will load without any issues.
+		for(var/i in 2 to map_datum.multiz)
+			var/T = list(STATION_LEVEL, STATION_CONTACT, REACHABLE, AI_OK, ZTRAIT_DOWN, ZTRAIT_BASETURF = /turf/simulated/openspace)
+			if(i != map_datum.multiz) // last?
+				T += ZTRAIT_UP
+			var/new_z_level = GLOB.space_manager.add_new_zlevel(MAIN_STATION + "#[i]", linkage = CROSSLINKED, traits = T)
+			if(multiz_levels.len < new_z_level)
+				multiz_levels.len = new_z_level
+			multiz_levels[new_z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
+			multiz_levels[new_z_level][Z_LEVEL_DOWN] = TRUE
+			if(i != map_datum.multiz) // last?
+				multiz_levels[new_z_level][Z_LEVEL_UP] = TRUE
+	else
+		map_z_level = GLOB.space_manager.add_new_zlevel(MAIN_STATION, linkage = CROSSLINKED, traits = s_traits)
+	GLOB.maploader.load_map(wrap_file(map_datum.map_path), increaseZ = map_datum.multiz ? TRUE : FALSE, z_offset = map_z_level)
 	log_startup_progress("Loaded [map_datum.station_name] in [stop_watch(watch)]s")
 
 	// Save station name in the DB
@@ -175,7 +200,7 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/loadLavaland()
 	var/watch = start_watch()
 	log_startup_progress("Loading Lavaland...")
-	var/lavaland_z_level = GLOB.space_manager.add_new_zlevel(MINING, linkage = UNAFFECTED, traits = list(ORE_LEVEL, REACHABLE, STATION_CONTACT, HAS_WEATHER, AI_OK))
+	var/lavaland_z_level = GLOB.space_manager.add_new_zlevel(MINING, linkage = UNAFFECTED, traits = list(ORE_LEVEL, REACHABLE, STATION_CONTACT, HAS_WEATHER, AI_OK, ZTRAIT_BASETURF = /turf/simulated/floor/plating/lava/smooth/lava_land_surface))
 	GLOB.maploader.load_map(file(map_datum.lavaland_path), z_offset = lavaland_z_level)
 	log_startup_progress("Loaded Lavaland in [stop_watch(watch)]s")
 

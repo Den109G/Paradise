@@ -1,4 +1,4 @@
-/datum/map
+/datum/map/multiz
 	name = "Multi Z Debug"
 	map_path = "_maps/map_files/debug/multiz_test.dmm"
 	lavaland_path = "_maps/map_files/generic/Lavaland.dmm"
