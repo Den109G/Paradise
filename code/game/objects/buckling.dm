@@ -97,7 +97,7 @@
 			M.adjust_fire_stacks(1)
 			M.IgniteMob()
 
-/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE)
+/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
 		buckled_mob.buckled = null
@@ -107,7 +107,16 @@
 		buckled_mobs -= buckled_mob
 		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
+		if(can_fall)
+			var/turf/location = buckled_mob.loc
+			if(istype(location) && !buckled_mob.currently_z_moving)
+				location.zFall(buckled_mob)
+
 		post_unbuckle_mob(.)
+
+		if(!QDELETED(buckled_mob) && !buckled_mob.currently_z_moving && isturf(buckled_mob.loc)) // In the case they unbuckled to a flying movable midflight.
+			var/turf/pitfall = buckled_mob.loc
+			pitfall?.zFall(buckled_mob)
 
 /atom/movable/proc/unbuckle_all_mobs(force = FALSE)
 	if(!has_buckled_mobs())

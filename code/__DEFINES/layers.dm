@@ -9,6 +9,10 @@
 #define PLANE_SPACE -95
 #define PLANE_SPACE_PARALLAX -90
 
+#define TRANSPARENT_FLOOR_PLANE -10 //Transparent plane that shows openspace underneath the floor
+#define OPENSPACE_PLANE -9 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -8 //Black square just over openspace plane to guaranteed cover all in openspace turf
+
 #define FLOOR_PLANE -2
 #define FLOOR_OVERLAY_PLANE -1.5
 #define GAME_PLANE -1

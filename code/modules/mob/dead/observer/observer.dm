@@ -147,6 +147,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return TRUE
 
+/mob/dead/can_z_move(direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
+	return TRUE
 
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.

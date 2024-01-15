@@ -247,6 +247,10 @@
 				L.drop_item_ground(M)
 			M.forceMove(src)
 
+/atom/proc/intercept_zImpact(list/falling_movables, levels = 1)
+	SHOULD_CALL_PARENT(TRUE)
+	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, falling_movables, levels)
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
 	return null

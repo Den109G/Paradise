@@ -443,6 +443,11 @@
 
 	Consume(moving_atom)
 
+/obj/machinery/power/supermatter_crystal/intercept_zImpact(list/falling_movables, levels)
+	. = ..()
+	for(var/atom/movable/hit_object as anything in falling_movables)
+		Bumped(hit_object)
+	. |= FALL_STOP_INTERCEPTING | FALL_INTERCEPTED
 
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
 	if(istype(AM, /mob/living))

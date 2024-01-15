@@ -55,6 +55,8 @@
 #define COMSIG_ATOM_CREATED "atom_created"
 //from SSatoms InitAtom - Only if the  atom was not deleted or failed initialization
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE "atom_init_success"
+//from SSatoms InitAtom - Only if the  atom was not deleted or failed initialization and has a loc
+#define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON "atom_init_success_on"
 ///from base of atom/attackby(): (/obj/item, /atom/source, params) sends singal on user who attacked source
 #define COMSIG_ATOM_ATTACK "atom_attack"
 ///from base of atom/attackby(): (/obj/item, /mob/living, params)
