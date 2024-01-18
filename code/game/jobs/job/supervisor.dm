@@ -14,7 +14,7 @@ GLOBAL_DATUM_INIT(captain_announcement, /datum/announcement/minor, new(do_newsca
 	minimal_access = list() 	//See get_access()
 	minimal_player_age = 30
 	min_age_allowed = 30
-	exp_requirements = 3000
+	exp_requirements = 6000
 	exp_type = EXP_TYPE_COMMAND
 	disabilities_allowed = 0
 	money_factor = 10
