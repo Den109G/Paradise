@@ -32,7 +32,7 @@
 	return areas
 
 /proc/get_open_turf_in_dir(atom/center, dir)
-	var/turf/T = get_ranged_target_turf(center, dir, 1)
+	var/turf/T = get_step(center, dir)
 	if(T && !T.density)
 		return T
 
@@ -40,16 +40,16 @@
 	var/list/hand_back = list()
 	// Inlined get_open_turf_in_dir, just to be fast
 	var/turf/new_turf = get_step(center, NORTH)
-	if(istype(new_turf))
+	if(new_turf && !new_turf.density)
 		hand_back += new_turf
 	new_turf = get_step(center, SOUTH)
-	if(istype(new_turf))
+	if(new_turf && !new_turf.density)
 		hand_back += new_turf
 	new_turf = get_step(center, EAST)
-	if(istype(new_turf))
+	if(new_turf && !new_turf.density)
 		hand_back += new_turf
 	new_turf = get_step(center, WEST)
-	if(istype(new_turf))
+	if(new_turf && !new_turf.density)
 		hand_back += new_turf
 	return hand_back
 

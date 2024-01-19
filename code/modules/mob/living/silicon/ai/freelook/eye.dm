@@ -40,15 +40,6 @@
 /mob/camera/aiEye/Move()
 	return 0
 
-/mob/camera/ai_eye/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
-	. = ..()
-	if(.)
-		setLoc(loc)
-
-/mob/camera/ai_eye/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
-	z_move_flags |= ZMOVE_IGNORE_OBSTACLES  //cameras do not respect these FLOORS you speak so much of
-	return ..()
-
 /mob/camera/aiEye/proc/GetViewerClient()
 	if(ai)
 		return ai.client

@@ -12,8 +12,6 @@
 	our_turf.layer = OPENSPACE_LAYER
 	if(is_openspace) // openspace and windows have different visual effects but both share this component.
 		our_turf.plane = OPENSPACE_PLANE
-	else
-		our_turf.plane = TRANSPARENT_FLOOR_PLANE
 
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
@@ -62,12 +60,13 @@
 
 ///Called when there is no real turf below this turf
 /datum/element/turf_z_transparency/proc/add_baseturf_underlay(turf/our_turf)
-	var/turf/path = check_level_trait(our_turf.z, ZTRAIT_BASETURF) || /turf/space
-	if(!ispath(path))
-		path = text2path(path)
-		if(!ispath(path))
-			warning("Z-level [our_turf.z] has invalid baseturf '[check_level_trait(our_turf.z, ZTRAIT_BASETURF)]'")
-			path = /turf/space
+	var/turf/path
+	if(check_level_trait(our_turf.z, ZTRAIT_OPENSPACE))
+		path = /turf/simulated/openspace
+	else if(check_level_trait(our_turf.z, ZTRAIT_LAVALAND))
+		path = /turf/simulated/floor/plating/lava/smooth/lava_land_surface
+	else
+		path = /turf/space
 	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TRANSPARENT_PLATING_LAYER, plane = PLANE_SPACE)
 	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
 	our_turf.underlays += underlay_appearance

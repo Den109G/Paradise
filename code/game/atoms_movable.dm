@@ -327,7 +327,7 @@
 		return TRUE
 	var/old_z_moving_value = currently_z_moving
 	currently_z_moving = max(currently_z_moving, new_z_moving_value)
-	return currently_z_moving > old_z_moving_value
+	return (currently_z_moving > old_z_moving_value)
 
 /atom/movable/proc/forceMove(atom/destination)
 	var/turf/old_loc = loc
@@ -389,18 +389,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!(impact_flags & ZIMPACT_NO_MESSAGE))
 		visible_message(span_danger("[src] crashes into [impacted_turf]!"), span_userdanger("You crash into [impacted_turf]!"))
-	// Needs to be crashed into something. starts with a turf itself
-	var/atom/highest = impacted_turf
-	for(var/i in impacted_turf.contents)
-		var/atom/A = i
-		if(!A.density)
-			continue
-		if(isobj(A) || ismob(A))
-			if(A.layer > highest.layer)
-				highest = A
 	if(!(impact_flags & ZIMPACT_NO_SPIN))
 		INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
-	throw_impact(highest)
+	SEND_SIGNAL(src, COMSIG_ATOM_ON_Z_IMPACT, impacted_turf, levels)
+
+	stack_trace("[currently_z_moving], [levels]")
 	return TRUE
 
 /*
@@ -490,7 +483,7 @@
 			else
 				to_chat(src, "<span class='notice'>You are not Superman.<span>")
 		return FALSE
-	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, start)))
+	if((!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(direction) && destination.zPassIn(direction))) || (!(z_move_flags & ZMOVE_ALLOW_ANCHORED) && anchored))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			to_chat(rider || src, "<span class='warning'>You couldn't move there!</span>")
 		return FALSE
@@ -509,7 +502,7 @@
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			addtimer(CALLBACK(buckled_mob, PROC_REF(check_buckled)), 1, TIMER_UNIQUE)
-	if(pulling)
+	if(pulling && !currently_z_moving)
 		addtimer(CALLBACK(src, PROC_REF(check_pull)), 1, TIMER_UNIQUE)
 	. = ..()
 	if(client)

@@ -68,6 +68,7 @@ SUBSYSTEM_DEF(mapping)
 
 	// Setup the Z-level linkage
 	GLOB.space_manager.do_transition_setup()
+	generate_z_level_linkages(GLOB.space_manager.z_list)
 
 	if(!CONFIG_GET(flag/disable_lavaland))
 		// Spawn Lavaland ruins and rivers.
@@ -162,26 +163,16 @@ SUBSYSTEM_DEF(mapping)
 	var/map_z_level
 	if(map_datum.multiz)
 		s_traits += ZTRAIT_UP //Giving to first zlevel, where the map will load.
-		map_z_level = GLOB.space_manager.add_new_zlevel(MAIN_STATION + "#1", linkage = CROSSLINKED, traits = s_traits)
-		if(multiz_levels.len < map_z_level)
-			multiz_levels.len = map_z_level //sucks
-		multiz_levels[map_z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
-		multiz_levels[map_z_level][Z_LEVEL_UP] = TRUE
+		map_z_level = GLOB.space_manager.add_new_zlevel(MAIN_STATION, linkage = CROSSLINKED, traits = s_traits)
 		if(map_datum.multiz > MULTIZ_WARN)
 			WARNING("Loading station with over [MULTIZ_WARN] levels. May cause some issues with space levels and/or perfomance on server.")
 
-		// creating more PROPER z levels. maploader will load without any issues.
+		// setting up more PROPER empty z levels. maploader will load without any issues.
 		for(var/i in 2 to map_datum.multiz)
-			var/T = list(STATION_LEVEL, STATION_CONTACT, REACHABLE, AI_OK, ZTRAIT_DOWN, ZTRAIT_BASETURF = /turf/simulated/openspace)
+			var/T = list(STATION_LEVEL, STATION_CONTACT, REACHABLE, AI_OK, ZTRAIT_DOWN, ZTRAIT_OPENSPACE)
 			if(i != map_datum.multiz) // last?
 				T += ZTRAIT_UP
-			var/new_z_level = GLOB.space_manager.add_new_zlevel(MAIN_STATION + "#[i]", linkage = CROSSLINKED, traits = T)
-			if(multiz_levels.len < new_z_level)
-				multiz_levels.len = new_z_level
-			multiz_levels[new_z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
-			multiz_levels[new_z_level][Z_LEVEL_DOWN] = TRUE
-			if(i != map_datum.multiz) // last?
-				multiz_levels[new_z_level][Z_LEVEL_UP] = TRUE
+			GLOB.space_manager.add_new_zlevel(MAIN_STATION + "([i])", linkage = CROSSLINKED, traits = T)
 	else
 		map_z_level = GLOB.space_manager.add_new_zlevel(MAIN_STATION, linkage = CROSSLINKED, traits = s_traits)
 	GLOB.maploader.load_map(wrap_file(map_datum.map_path), increaseZ = map_datum.multiz ? TRUE : FALSE, z_offset = map_z_level)
@@ -200,7 +191,8 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/loadLavaland()
 	var/watch = start_watch()
 	log_startup_progress("Loading Lavaland...")
-	var/lavaland_z_level = GLOB.space_manager.add_new_zlevel(MINING, linkage = UNAFFECTED, traits = list(ORE_LEVEL, REACHABLE, STATION_CONTACT, HAS_WEATHER, AI_OK, ZTRAIT_BASETURF = /turf/simulated/floor/plating/lava/smooth/lava_land_surface))
+	var/trait_list = list(ORE_LEVEL, REACHABLE, STATION_CONTACT, HAS_WEATHER, AI_OK, ZTRAIT_LAVALAND)
+	var/lavaland_z_level = GLOB.space_manager.add_new_zlevel(MINING, linkage = UNAFFECTED, traits = trait_list)
 	GLOB.maploader.load_map(file(map_datum.lavaland_path), z_offset = lavaland_z_level)
 	log_startup_progress("Loaded Lavaland in [stop_watch(watch)]s")
 
@@ -300,6 +292,25 @@ SUBSYSTEM_DEF(mapping)
 			log_world("Failed to place [current_pick.name] ruin.")
 
 	log_world("Ruin loader finished with [budget] left to spend.")
+
+/datum/controller/subsystem/mapping/proc/generate_z_level_linkages(z_list)
+	for(var/z_level in 1 to length(z_list))
+		generate_linkages_for_z_level(z_level)
+
+/datum/controller/subsystem/mapping/proc/generate_linkages_for_z_level(z_level)
+	if(!isnum(z_level) || z_level <= 0)
+		return FALSE
+
+	if(multiz_levels.len < z_level)
+		multiz_levels.len = z_level
+
+	var/z_above = check_level_trait(z_level, ZTRAIT_UP)
+	var/z_below = check_level_trait(z_level, ZTRAIT_DOWN)
+	if(!(z_above == TRUE || z_above == FALSE || z_above == null) || !(z_below == TRUE || z_below == FALSE || z_below == null))
+		stack_trace("Warning, numeric mapping offsets are deprecated. Instead, mark z level connections by setting UP/DOWN to true if the connection is allowed")
+	multiz_levels[z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
+	multiz_levels[z_level][Z_LEVEL_UP] = !!z_above
+	multiz_levels[z_level][Z_LEVEL_DOWN] = !!z_below
 
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
