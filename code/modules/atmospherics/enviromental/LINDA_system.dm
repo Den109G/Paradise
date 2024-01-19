@@ -1,48 +1,36 @@
-/atom/var/CanAtmosPass = ATMOS_PASS_YES
-/atom/var/CanAtmosPassVertical = ATMOS_PASS_YES
-
-/atom/proc/CanAtmosPass(turf/T)
-	switch(CanAtmosPass)
-		if(ATMOS_PASS_PROC)
-			return ATMOS_PASS_YES
-		if(ATMOS_PASS_DENSITY)
-			return !density
-		else
-			return CanAtmosPass
-
-/turf/CanAtmosPass = ATMOS_PASS_NO
-/turf/CanAtmosPassVertical = ATMOS_PASS_NO
-
-/turf/simulated/CanAtmosPass(turf/T, vertical = FALSE)
-	var/dir = vertical ? get_dir_multiz(src, T) : get_dir(src, T)
-	var/opp = REVERSE_DIR(dir)
-	var/R = FALSE
+/turf/proc/CanAtmosPass(turf/T, vertical = FALSE)
 	if(!istype(T))
 		return FALSE
-	if(vertical && !(zAirOut(dir, T) && T.zAirIn(dir, src)))
-		R = TRUE
+	var/direction = vertical ? get_dir_multiz(src, target_turf) : get_dir(src, target_turf)//if not UP and DOWN, get_dir_multiz returns get_dir
+	var/can_pass = TRUE
+	if(vertical && !(zAirOut(direction, target_turf) && T.zAirIn(direction, src)))
+		can_pass = FALSE
 	if(blocks_air || T.blocks_air)
-		R = TRUE
+		can_pass = FALSE
+	//If we're just checking with ourselves no sense asking objects on the turf
+	if(T == src)
+		return can_pass
 
-	for(var/J in contents+T.contents)
-		var/obj/O = J
-		var/turf/other = (O.loc == src ? T : src)
-		if(!(vertical? (CANVERTICALATMOSPASS(O, other)) : (CANATMOSPASS(O, other))))
-			R = TRUE
-			if(O.BlockSuperconductivity())	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
-				atmos_supeconductivity |= dir
-				T.atmos_supeconductivity |= opp
-				return FALSE
+	for(var/obj/O in contents + T.contents)
+		if(O.CanAtmosPass(T))
+			continue
+		can_pass = FALSE
+		if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
+			atmos_supeconductivity |= direction
+			T.atmos_supeconductivity |= reverse_direction(direction)
+			return FALSE				//no need to keep going, we got all we asked
 
-	atmos_supeconductivity &= ~dir
-	T.atmos_supeconductivity &= ~opp
+	atmos_supeconductivity &= ~direction
+	T.atmos_supeconductivity &= ~reverse_direction(direction)
 
-	return !R
+	return can_pass
 
+/atom/movable/proc/CanAtmosPass()
+	return TRUE
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
-	return (!density || !height || (istype(mover) && mover.checkpass(PASS_OTHER_THINGS)))
-// бля. Я бы вообще нахрен написал ИЗНИНЖЯНЕВЕДИМКА() проверку нежели этот пиздец который до || !density
+	return (istype(mover) && mover.checkpass(PASS_OTHER_THINGS)) || !density || !height
+
 
 /turf/CanPass(atom/movable/mover, turf/target, height=1.5)
 	if(!target)
@@ -71,24 +59,33 @@
 	return FALSE
 
 /turf/proc/CalculateAdjacentTurfs()
-	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs	// src. is necessary
+	atmos_adjacent_turfs_amount = 0
+	var/list/z_traits = SSmapping.multiz_levels[z]
 	for(var/direction in GLOB.cardinals_multiz)
-		var/turf/T = get_step_multiz(src, direction)
+		var/turf/T = (direction & (UP|DOWN)) ? \
+			(direction & UP) ? \
+				(z_traits[Z_LEVEL_UP]) ? \
+					(get_step(locate(x, y, z + 1), NONE)) : \
+				(null) : \
+				(z_traits[Z_LEVEL_DOWN]) ? \
+					(get_step(locate(x, y, z - 1), NONE)) : \
+				(null) : \
+			(get_step(src, direction))
 		if(!istype(T))
 			continue
-		if(!(blocks_air || T.blocks_air) && ((direction & (UP|DOWN)) ? (CANVERTICALATMOSPASS(T, src)) : (CANATMOSPASS(T, src))) )
-			LAZYINITLIST(atmos_adjacent_turfs)
-			LAZYINITLIST(T.atmos_adjacent_turfs)
-			atmos_adjacent_turfs[T] = TRUE
-			T.atmos_adjacent_turfs[src] = TRUE
+		var/counterdir = get_dir(T, src)
+		var/V = (direction & (UP | DOWN))
+		if(CanAtmosPass(T, V))
+			atmos_adjacent_turfs_amount += 1
+			atmos_adjacent_turfs |= direction
+			if(!(T.atmos_adjacent_turfs & counterdir))
+				T.atmos_adjacent_turfs_amount += 1
+			T.atmos_adjacent_turfs |= counterdir
 		else
-			if (atmos_adjacent_turfs)
-				atmos_adjacent_turfs -= T
-			if (T.atmos_adjacent_turfs)
-				T.atmos_adjacent_turfs -= src
-			UNSETEMPTY(T.atmos_adjacent_turfs)
-	UNSETEMPTY(atmos_adjacent_turfs)
-	src.atmos_adjacent_turfs = atmos_adjacent_turfs			// .src is necessary
+			atmos_adjacent_turfs &= ~direction
+			if(T.atmos_adjacent_turfs & counterdir)
+				T.atmos_adjacent_turfs_amount -= 1
+			T.atmos_adjacent_turfs &= ~counterdir
 
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
@@ -99,19 +96,28 @@
 
 	var/adjacent_turfs = list()
 	var/turf/simulated/curloc = src
+	for(var/direction in GLOB.cardinals_multiz)
+		if(!(curloc.atmos_adjacent_turfs & direction))
+			continue
+
+		var/turf/simulated/S = get_step_multiz(curloc, direction)
+		if(istype(S))
+			adjacent_turfs += S
+	if(!alldir)
+		return adjacent_turfs
 
 	for(var/direction in GLOB.diagonals_multiz)
 		var/matchingDirections = 0
-		var/turf/S = get_step_multiz(curloc, direction)
-		if(!S)
-			continue
+		var/turf/simulated/S = get_step_multiz(curloc, direction)
 
 		for(var/checkDirection in GLOB.cardinals_multiz)
-			var/turf/checkTurf = get_step(S, checkDirection)
-			if(!S.atmos_adjacent_turfs || !S.atmos_adjacent_turfs[checkTurf])
+			if(!(S.atmos_adjacent_turfs & checkDirection))
 				continue
+			var/turf/simulated/checkTurf = get_step(S, checkDirection)
+
 			if(checkTurf in adjacent_turfs)
 				matchingDirections++
+
 			if(matchingDirections >= 2)
 				adjacent_turfs += S
 				break
@@ -130,10 +136,12 @@
 	if(SSair)
 		SSair.add_to_active(src, command)
 
-/atom/movable/proc/move_update_air(turf/T)
+/atom/movable/proc/move_update_air(var/turf/T)
     if(istype(T,/turf))
         T.air_update_turf(1)
     air_update_turf(1)
+
+
 
 /atom/movable/proc/atmos_spawn_air(text, amount) //because a lot of people loves to copy paste awful code lets just make a easy proc to spawn your plasma fires
 	var/turf/simulated/T = get_turf(src)
