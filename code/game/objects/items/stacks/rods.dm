@@ -44,6 +44,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
+	AddElement(/datum/element/openspace_item_click_handler)
 	recipes = GLOB.rod_recipes
 
 /obj/item/stack/rods/update_icon()
@@ -82,6 +83,10 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /obj/item/stack/rods/cyborg/update_icon()
 	return
 
+/obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
+		target.attackby(src, user, click_parameters)
+
 /obj/item/stack/fireproof_rods
 	name = "fireproof rods"
 	desc = "Жаропрочные стержни, способные выдержать жар в несколько тысяч градусов. Могут использоваться для строительства мостов над лавой."
@@ -110,3 +115,6 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	else
 		icon_state = "f_rods"
 
+/obj/item/stack/fireproof_rods/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
+		target.attackby(src, user, click_parameters)

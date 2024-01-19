@@ -225,7 +225,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		return interact(user)
 
 /obj/machinery/gravity_generator/main/attack_ai(mob/user as mob)
-	return 1
+	return TRUE
 
 /obj/machinery/gravity_generator/main/attack_ghost(mob/user as mob)
 	return interact(user)
@@ -257,7 +257,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 
 	if(href_list["gentoggle"])
 		breaker = !breaker
@@ -379,8 +379,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	for(var/shaked in GLOB.mob_list)
 		var/mob/M = shaked
 		var/turf/their_turf = get_turf(M)
-		if(their_turf && their_turf.z == our_turf.z)
-			M.update_gravity(M.mob_has_gravity())
+		if(their_turf?.z == our_turf.z)
+			M.update_gravity(M.mob_has_gravity() && !(check_level_trait(z, STATION_LEVEL) && check_level_trait(M.z, STATION_LEVEL)))
 			if(M.client)
 				shake_camera(M, 15, 1)
 				M.playsound_local(our_turf, null, 100, 1, 0.5, S = alert_sound)
@@ -389,21 +389,27 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
 	if(GLOB.gravity_generators["[T.z]"])
 		return length(GLOB.gravity_generators["[T.z]"])
-	return 0
+	return FALSE
 
 /obj/machinery/gravity_generator/main/proc/update_list()
 	var/turf/T = get_turf(src.loc)
 	if(T)
-		if(!GLOB.gravity_generators["[T.z]"])
-			GLOB.gravity_generators["[T.z]"] = list()
-		if(on)
-			GLOB.gravity_generators["[T.z]"] |= src
+		var/list/z_list = list()
+		if(check_level_trait(T.z, STATION_LEVEL))
+			for(var/z in levels_by_trait(STATION_LEVEL))
+				z_list += z
 		else
-			GLOB.gravity_generators["[T.z]"] -= src
-
+			z_list += T.z
+		for(var/z in z_list)
+			if(!GLOB.gravity_generators["[z]"])
+				GLOB.gravity_generators["[z]"] = list()
+			if(on)
+				GLOB.gravity_generators["[z]"] |= src
+			else
+				GLOB.gravity_generators["[z]"] -= src
 // Misc
 
 /obj/item/paper/gravity_gen

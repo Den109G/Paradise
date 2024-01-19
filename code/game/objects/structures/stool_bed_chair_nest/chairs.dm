@@ -416,8 +416,12 @@
 /obj/item/chair/proc/plant(mob/user)
 	if(QDELETED(src))
 		return
+	var/turf/T = get_turf(loc)
+	if(density || isopenspaceturf(T))
+		to_chat(user, span_warning("You need ground to plant this on!"))
+		return
 
-	for(var/obj/A in get_turf(loc))
+	for(var/obj/A in get_turf(T))
 		if(istype(A, /obj/structure/chair))
 			to_chat(user, span_danger("There is already [A] here."))
 			return

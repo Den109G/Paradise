@@ -39,7 +39,7 @@
 	update_surrounding()
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -64,11 +64,12 @@
 		if(S)
 			S.update_icon()
 
-/obj/structure/stairs/proc/on_exit(datum/source, atom/movable/leaving, direction)
+/obj/structure/stairs/proc/on_exit(datum/source, atom/movable/leaving, atom/newloc)
 	SIGNAL_HANDLER
 
 	if(leaving == src)
 		return //Let's not block ourselves.
+	var/direction = get_dir_multiz(src, newloc)
 
 	if(!isobserver(leaving) && isTerminator() && direction == dir)
 		leaving.set_currently_z_moving(CURRENTLY_Z_ASCENDING)
@@ -85,7 +86,8 @@
 	var/turf/checking = get_step_multiz(get_turf(src), UP)
 	if(!istype(checking))
 		return
-	if(!checking.zPassIn(climber, UP, get_turf(src)))
+	// I'm only interested in if the pass is unobstructed, not if the mob will actually make it
+	if(!climber.can_z_move(UP, get_turf(src), checking, z_move_flags = ZMOVE_ALLOW_BUCKLED))
 		return
 	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
 	if(istype(target) && !climber.can_z_move(DOWN, target, z_move_flags = ZMOVE_FALL_FLAGS)) //Don't throw them into a tile that will just dump them back down.
@@ -222,13 +224,15 @@
 	if(istype(stack, /obj/item/stack/sheet/metal))
 		to_chat(user, span_notice("You start adding [stack] to [src]..."))
 		if(do_after(user, 10 SECONDS, target = src) || !stack.use(10) || (locate(/obj/structure/table) in loc))
-			new /obj/structure/stairs(loc)
+			var/obj/structure/stairs/new_stairs = new /obj/structure/stairs(loc)
+			new_stairs.setDir(dir)
 			qdel(src)
 			return
 	if(istype(stack, /obj/item/stack/sheet/wood))
 		to_chat(user, span_notice("You start adding [stack] to [src]..."))
 		if(do_after(user, 10 SECONDS, target = src) || !stack.use(10) || (locate(/obj/structure/table) in loc))
-			new /obj/structure/stairs/wood(loc)
+			var/obj/structure/stairs/new_stairs = new /obj/structure/stairs/wood(loc)
+			new_stairs.setDir(dir)
 			qdel(src)
 			return
 	return TRUE

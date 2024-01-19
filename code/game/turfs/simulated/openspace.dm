@@ -1,13 +1,32 @@
+GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdrop, new)
+
+/atom/movable/openspace_backdrop
+	name = "openspace_backdrop"
+	anchored = TRUE
+	icon = 'icons/turf/space.dmi'
+	icon_state = "grey"
+	plane = OPENSPACE_BACKDROP_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = SPLASHSCREEN_LAYER
+	//I don't know why the others are aligned but I shall do the same.
+	vis_flags = VIS_INHERIT_ID
+
 /turf/simulated/openspace
 	name = "open space"
 	desc = "Watch your step!"
 	icon = 'icons/turf/space.dmi'
-	icon_state = "openspace"
+	icon_state = "openspace" //transparent
 	baseturf = /turf/simulated/openspace
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
+
+	// PARACODE
+	thermal_conductivity = 0.040
+	heat_capacity = 10000
+	transparent_floor = TRUE // bruh
+	intact = FALSE //this means wires go on top
 
 /turf/simulated/openspace/airless
 	temperature = TCMB
@@ -21,12 +40,15 @@
 	. = ..()
 	if(!GET_TURF_BELOW(src))
 		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
+	plane = OPENSPACE_PLANE
+	layer = OPENSPACE_LAYER
+	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_created))
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/openspace/LateInitialize()
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency)
+	AddElement(/datum/element/turf_z_transparency, is_openspace = TRUE)
 
 /turf/simulated/openspace/ChangeTurf(path, defer_change, keep_icon, ignore_air, copy_existing_baseturf)
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
@@ -46,6 +68,9 @@
 ///Makes movables fall when forceMove()'d to this turf.
 /turf/simulated/openspace/Entered(atom/movable/movable)
 	. = ..()
+	var/mob/AM = movable
+	if(ismob(AM) && AM.buckled && AM.currently_z_moving == CURRENTLY_Z_MOVING_GENERIC)
+		return
 	if(movable.set_currently_z_moving(CURRENTLY_Z_FALLING))
 		zFall(movable, falling_from_move = TRUE)
 /**
@@ -70,7 +95,8 @@
 /turf/simulated/openspace/zAirOut()
 	return TRUE
 
-/turf/simulated/openspace/zPassIn(atom/movable/A, direction, turf/source)
+// this is open NON-floor.
+/turf/simulated/openspace/zPassIn(direction)
 	if(direction == DOWN)
 		for(var/obj/O in contents)
 			if(O.obj_flags & BLOCK_Z_IN_DOWN)
@@ -83,7 +109,7 @@
 		return TRUE
 	return FALSE
 
-/turf/simulated/openspace/zPassOut(atom/movable/A, direction, turf/destination)
+/turf/simulated/openspace/zPassOut(direction)
 	if(direction == DOWN)
 		for(var/obj/O in contents)
 			if(O.obj_flags & BLOCK_Z_OUT_DOWN)
@@ -168,12 +194,6 @@
 				to_chat(user, span_notice("Вы установили мостик."))
 				new /obj/structure/lattice/catwalk/fireproof(src)
 	..()
-
-// PARACODE
-
-/turf/simulated/openspace
-	thermal_conductivity = 0.040
-	heat_capacity = 10000
 
 /turf/simulated/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))

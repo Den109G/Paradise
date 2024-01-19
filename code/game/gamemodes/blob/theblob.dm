@@ -16,6 +16,7 @@
 	var/atmosblock = FALSE //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 	creates_cover = TRUE
+	obj_flags = BLOCK_Z_OUT_DOWN // stops blob mobs from falling on multiz.
 
 /obj/structure/blob/New(loc)
 	..()

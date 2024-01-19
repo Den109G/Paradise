@@ -41,7 +41,7 @@
 
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
-	return (istype(mover) && mover.checkpass(PASS_OTHER_THINGS)) || !density || !height
+	return (!density || !height || (istype(mover) && mover.checkpass(PASS_OTHER_THINGS)))
 // бля. Я бы вообще нахрен написал ИЗНИНЖЯНЕВЕДИМКА() проверку нежели этот пиздец который до || !density
 
 /turf/CanPass(atom/movable/mover, turf/target, height=1.5)

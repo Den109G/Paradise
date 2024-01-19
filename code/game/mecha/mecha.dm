@@ -145,6 +145,8 @@
 	V.install(src)
 	qdel(V)
 
+	AddElement(/datum/element/falling_hazard, damage = 100, hardhat_safety = FALSE, crushes = TRUE)
+
 ////////////////////////
 ////// Helpers /////////
 ////////////////////////

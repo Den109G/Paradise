@@ -81,6 +81,7 @@
 	return
 
 /mob/living/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
+	log_debug("onZImpact: [src], [buckled], [levels], [impacted_turf], [impact_flags]")
 	if(!istype(impacted_turf, /turf/simulated/openspace))
 		impact_flags |= ZImpactDamage(impacted_turf, levels)
 
@@ -127,9 +128,12 @@
 		)
 
 	if(!lying)
-		var/damage_for_each_leg = round(incoming_damage / 2)
+		var/damage_for_each_leg = round(incoming_damage / 4)
 		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG)
 		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_PRECISE_L_FOOT)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_PRECISE_R_FOOT)
+
 	else
 		apply_damage(incoming_damage, BRUTE)
 
@@ -686,7 +690,7 @@
 		to_chat(usr, "OOC Metadata is not supported by this server!")
 
 	return
-currently_z_moving
+
 /mob/living/Move(atom/newloc, direct, movetime)
 	if(buckled && buckled.loc != newloc) //not updating position
 		if(!buckled.anchored)
@@ -726,8 +730,8 @@ currently_z_moving
 		if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir))) // puller and pullee more than one tile away or in diagonal position
 			// This sucks.
 			// Pulling things up/down & into other z-levels. Conga line lives.
-			if(pulling.z != z)
-				dest = get_step(pulling, get_dir(pulling, dest))
+			if(pulling.z != z && can_z_move(null, pulling, dest))
+				dest = get_step_multiz(pulling, get_dir(pulling, dest))
 			if(isliving(pulling))
 				var/mob/living/M = pulling
 				if(M.lying && !M.buckled && (prob(M.getBruteLoss() * 200 / M.maxHealth)))

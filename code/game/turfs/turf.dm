@@ -3,10 +3,12 @@
 	level = 1
 	luminosity = 1
 
+	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE	// Important for interaction with and visualization of openspace.
+
 	var/intact = TRUE
-	var/turf/baseturf = /turf/space
+	var/turf/baseturf = /turf/baseturf_bottom
 	var/slowdown = 0 //negative for faster, positive for slower
-	var/transparent_floor = FALSE //used to check if pipes should be visible under the turf or not
+	var/transparent_floor = FALSE // It's a check that determines if the turf is transparent to reveal the stuff(pipes, safe, cables and e.t.c.) without looking on intact
 
 	var/real_layer = TURF_LAYER
 	layer = MAP_EDITOR_TURF_LAYER
@@ -99,11 +101,9 @@
 	changing_turf = FALSE
 
 	var/turf/V = GET_TURF_ABOVE(src)
-	if(V)
-		V.multiz_turf_del(src, DOWN)
+	V?.multiz_turf_del(src, DOWN)
 	V = GET_TURF_BELOW(src)
-	if(V)
-		V.multiz_turf_del(src, UP)
+	V?.multiz_turf_del(src, UP)
 
 	if(force)
 		..()
@@ -239,8 +239,16 @@
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path, defer_change = FALSE, keep_icon = TRUE, ignore_air = FALSE, copy_existing_baseturf = TRUE)
-	if(!path)
-		return
+	switch(path)
+		if(null)
+			return
+		if(/turf/baseturf_bottom)
+			if(check_level_trait(z, ZTRAIT_OPENSPACE))
+				path = /turf/simulated/openspace
+			else if(check_level_trait(z, ZTRAIT_LAVALAND))
+				path = /turf/simulated/floor/plating/lava/smooth/lava_land_surface
+			else
+				path = /turf/space
 	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
@@ -558,21 +566,14 @@
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/zPassIn(atom/movable/A, direction, turf/source)
-	if(direction == DOWN)
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_IN_DOWN)
-				return FALSE
-		return TRUE
+//The zpass procs exist to be overriden, not directly called
+//use can_z_pass for that
+///If we'd allow anything to travel into us
+/turf/proc/zPassIn(direction)
 	return FALSE
 
-//direction is direction of travel of A
-/turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
-	if(direction == UP)
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_OUT_UP)
-				return FALSE
-		return TRUE
+///If we'd allow anything to travel out of us
+/turf/proc/zPassOut(direction)
 	return FALSE
 
 //direction is direction of travel of air
@@ -590,8 +591,7 @@
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
 
 ///Called each time the target falls down a z level possibly making their trajectory come to a halt. see __DEFINES/movement.dm.
-/turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf)
-	var/flags = NONE
+/turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf, flags = NONE)
 	var/list/falling_movables = falling.get_z_move_affected()
 	var/list/falling_mov_names
 	for(var/atom/movable/falling_mov as anything in falling_movables)
@@ -604,7 +604,7 @@
 	if(prev_turf && !(flags & FALL_NO_MESSAGE))
 		for(var/mov_name in falling_mov_names)
 			prev_turf.visible_message(span_danger("[mov_name] falls through [prev_turf]!"))
-	if(!(flags & FALL_INTERCEPTED) && zFall(falling, levels + 1))
+	if(!(flags & FALL_INTERCEPTED) && zFall(falling, levels + 1)) // Can we fall down? If so return false
 		return FALSE
 	for(var/atom/movable/falling_mov as anything in falling_movables)
 		if(!(flags & FALL_RETAIN_PULL))
@@ -622,20 +622,24 @@
 		return FALSE
 	var/isliving = isliving(falling)
 	if(!isliving && !isobj(falling))
-		return
+		return FALSE
+	var/atom/movable/living_buckled
 	if(isliving)
 		var/mob/living/falling_living = falling
 		//relay this mess to whatever the mob is buckled to.
 		if(falling_living.buckled)
+			living_buckled = falling
 			falling = falling_living.buckled
 	if(!falling_from_move && falling.currently_z_moving)
-		return
+		return FALSE
 	if(!force && !falling.can_z_move(DOWN, src, target, ZMOVE_FALL_FLAGS))
 		falling.set_currently_z_moving(FALSE, TRUE)
+		living_buckled?.set_currently_z_moving(FALSE, TRUE)
 		return FALSE
 
 	// So it doesn't trigger other zFall calls. Cleared on zMove.
 	falling.set_currently_z_moving(CURRENTLY_Z_FALLING)
+	living_buckled?.set_currently_z_moving(CURRENTLY_Z_FALLING)
 
 	falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
 	target.zImpact(falling, levels, src)

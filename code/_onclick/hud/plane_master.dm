@@ -22,30 +22,18 @@
 
 
 ///Things rendered on "openspace"; holes in multi-z
-/obj/screen/plane_master/openspace_backdrop
-	name = "open space backdrop plane master"
+/obj/screen/plane_master/openspace
+	name = "open space plane master"
 	plane = OPENSPACE_BACKDROP_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_MULTIPLY
 	alpha = 255
-
-/obj/screen/plane_master/openspace
-	name = "open space plane master"
-	plane = OPENSPACE_PLANE
-	appearance_flags = PLANE_MASTER
 
 /obj/screen/plane_master/openspace/Initialize(mapload)
 	. = ..()
 	add_filter("first_stage_openspace", 1, drop_shadow_filter(color = "#04080FAA", size = -10))
 	add_filter("second_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -15))
 	add_filter("third_stage_openspace", 3, drop_shadow_filter(color = "#04080FAA", size = -20))
-
-///For any transparent multi-z tiles we want to render
-/obj/screen/plane_master/transparent
-	name = "transparent plane master"
-	plane = TRANSPARENT_FLOOR_PLANE
-	appearance_flags = PLANE_MASTER
-
 
 /obj/screen/plane_master/floor
 	name = "floor plane master"
