@@ -150,7 +150,7 @@
 		return !opacity
 	return !density
 
-/obj/machinery/door/CanAtmosPass()
+/obj/machinery/door/CanAtmosPass(turf/T, vertical)
 	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user)

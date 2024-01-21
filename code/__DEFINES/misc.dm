@@ -11,9 +11,6 @@
 //#define NORTHWEST 9
 //#define SOUTHWEST 10
 
-/// Inverse direction, taking into account UP|DOWN if necessary.
-#define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
-
 //Security levels
 #define SEC_LEVEL_GREEN	0
 #define SEC_LEVEL_BLUE	1

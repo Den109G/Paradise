@@ -222,5 +222,5 @@
 	else
 		return !density
 
-/obj/structure/foamedmetal/CanAtmosPass()
+/obj/structure/foamedmetal/CanAtmosPass(turf/T, vertical)
 	return !density

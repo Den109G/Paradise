@@ -73,7 +73,7 @@
 		return FALSE
 	return 1
 
-/obj/structure/windoor_assembly/CanAtmosPass(turf/T)
+/obj/structure/windoor_assembly/CanAtmosPass(turf/T, vertical)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else

@@ -49,7 +49,7 @@
 		return 1
 	return 0
 
-/obj/structure/blob/CanAtmosPass(turf/T)
+/obj/structure/blob/CanAtmosPass(turf/T, vertical)
 	return !atmosblock
 
 

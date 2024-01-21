@@ -39,7 +39,7 @@
 	else
 		return FALSE
 
-/obj/structure/inflatable/CanAtmosPass(turf/T)
+/obj/structure/inflatable/CanAtmosPass(turf/T, vertical)
 	return !density
 
 /obj/structure/inflatable/attack_hand(mob/user as mob)
@@ -122,7 +122,7 @@
 		return !opacity
 	return !density
 
-/obj/structure/inflatable/door/CanAtmosPass(turf/T)
+/obj/structure/inflatable/door/CanAtmosPass(turf/T, vertical)
 	return !density
 
 /obj/structure/inflatable/door/proc/TryToSwitchState(atom/user)
