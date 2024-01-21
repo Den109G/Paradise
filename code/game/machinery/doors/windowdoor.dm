@@ -129,7 +129,7 @@
 	else
 		return 1
 
-/obj/machinery/door/window/CanAtmosPass(turf/T)
+/obj/machinery/door/window/CanAtmosPass(turf/T, vertical)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else

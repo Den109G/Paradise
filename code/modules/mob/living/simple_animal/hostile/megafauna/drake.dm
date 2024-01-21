@@ -476,7 +476,7 @@ Difficulty: Medium
 	duration = 82
 	color = COLOR_DARK_ORANGE
 
-/obj/effect/temp_visual/drakewall/CanAtmosPass()
+/obj/effect/temp_visual/drakewall/CanAtmosPass(turf/T, vertical)
 	return !density
 
 /obj/effect/temp_visual/lava_safe

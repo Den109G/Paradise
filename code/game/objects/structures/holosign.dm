@@ -116,7 +116,7 @@
 	. = ..()
 	air_update_turf(TRUE)
 
-/obj/structure/holosign/barrier/atmos/CanAtmosPass(turf/T)
+/obj/structure/holosign/barrier/atmos/CanAtmosPass(turf/T, vertical)
 	return FALSE
 
 /obj/structure/holosign/barrier/atmos/Destroy()
