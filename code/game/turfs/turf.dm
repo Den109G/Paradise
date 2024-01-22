@@ -644,6 +644,8 @@
 	falling.set_currently_z_moving(CURRENTLY_Z_FALLING)
 	living_buckled?.set_currently_z_moving(CURRENTLY_Z_FALLING)
 
+	if(isliving)
+		add_attack_logs(falling, falling, "fell into a [src]")
 	falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
 	target.zImpact(falling, levels, src)
 	return TRUE
