@@ -503,7 +503,7 @@
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.update_icon()
 
-/mob/verb/up()
+/mob/verb/move_up()
 	set name = "Move Upwards"
 	set category = "IC"
 
@@ -533,7 +533,7 @@
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move upwards."))
 
-/mob/verb/down()
+/mob/verb/move_down()
 	set name = "Move Down"
 	set category = "IC"
 

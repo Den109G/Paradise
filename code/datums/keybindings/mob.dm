@@ -20,7 +20,7 @@
 
 /datum/keybinding/mob/drop_held_object
 	name = "Выложить вещь в руке"
-	keys = list("Q", "Northwest")
+	keys = list("Q")
 
 /datum/keybinding/mob/drop_held_object/can_use(client/C, mob/M)
 	return !isrobot(M) && ..()   //robots on 'q' have their own proc for drop, in keybindinds/robot.dm
@@ -229,3 +229,19 @@
 /datum/keybinding/mob/target/l_foot
 	name = "Выбрать левую ступню"
 	body_part = BODY_ZONE_PRECISE_L_FOOT
+
+/datum/keybinding/mob/move_up
+	name = "Подняться"
+	keys = list("Northeast") // Page Up
+
+/datum/keybinding/mob/move_down
+	name = "Спуститься"
+	keys = list("Southeast") // Page Down
+
+/datum/keybinding/mob/move_up/down(client/C)
+	. = ..()
+	C.mob.move_up()
+
+/datum/keybinding/mob/move_down/down(client/C)
+	. = ..()
+	C.mob.move_down()
