@@ -3502,12 +3502,18 @@
 	},
 /area/shuttle/ninja)
 "bLc" = (
-/obj/machinery/door/airlock/shuttle,
-/obj/structure/fans/tiny,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 4;
+	height = 6;
+	id = "gamma_away";
+	name = "gamma centcom";
+	width = 7
 	},
-/area/shuttle/gamma/space)
+/turf/space{
+	icon_state = "black"
+	},
+/area/space)
 "bLi" = (
 /obj/effect/turf_decal{
 	dir = 1;
@@ -4560,6 +4566,18 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/jail)
+"cmn" = (
+/obj/mecha/combat/durand/loaded{
+	operation_req_access = list(1)
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/mech,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/gamma)
 "cmw" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -6136,6 +6154,14 @@
 	icon_state = "dark"
 	},
 /area/syndicate_mothership/elite_squad)
+"daJ" = (
+/obj/structure/sign/poster/official/nanotrasen_logo{
+	pixel_x = -32
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/gamma)
 "daM" = (
 /obj/item/twohanded/required/kirbyplants,
 /turf/simulated/floor/wood,
@@ -8585,33 +8611,18 @@
 /turf/simulated/floor/plasteel/grimy,
 /area/trader_station/sol)
 "esw" = (
-/obj/structure/closet/secure_closet/guncabinet{
-	layer = 2.9;
-	name = "Enforcer"
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/obj/item/ammo_box/magazine/enforcer/lethal,
-/obj/item/ammo_box/magazine/enforcer/lethal,
-/obj/item/ammo_box/magazine/enforcer/lethal,
-/obj/item/ammo_box/magazine/enforcer/lethal,
-/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
-	icon_state = "enforcer_red"
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
-/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
-	icon_state = "enforcer_red"
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
-	icon_state = "enforcer_red"
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
-	icon_state = "enforcer_red"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/machinery/mech_bay_recharge_port/upgraded,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "esx" = (
 /obj/machinery/light{
 	dir = 1;
@@ -11554,13 +11565,22 @@
 /turf/simulated/floor/carpet/black,
 /area/ninja/outpost)
 "fRj" = (
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = -32
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 32;
+	pixel_y = -12
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 32;
+	pixel_y = 8
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 32;
+	pixel_y = -2
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "fRH" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -12854,17 +12874,19 @@
 	},
 /area/syndicate_mothership/control)
 "gAk" = (
-/obj/mecha/combat/durand/loaded{
-	operation_req_access = list(1)
-	},
 /obj/structure/cable{
-	icon_state = "4-8"
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/obj/effect/turf_decal/mech,
+/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/light/spot{
+	dir = 4;
+	tag = "icon-tube1 (EAST)"
+	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "gAB" = (
 /obj/structure/flora/junglebush,
 /obj/effect/turf_decal/siding/green{
@@ -15763,9 +15785,6 @@
 	icon_state = "iron8"
 	},
 /area/syndicate_mothership/control)
-"irL" = (
-/turf/simulated/wall/shuttle/onlyselfsmooth,
-/area/shuttle/gamma/space)
 "isc" = (
 /obj/structure/reagent_dispensers/fueltank/chem{
 	pixel_x = 32
@@ -16633,19 +16652,21 @@
 	},
 /area/centcom/jail)
 "iMB" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/structure/closet/secure_closet/guncabinet{
+	layer = 2.9;
+	name = "advanced energy gun"
 	},
-/obj/machinery/computer/mech_bay_power_console,
-/obj/machinery/light/spot{
-	dir = 4;
-	tag = "icon-tube1 (EAST)"
+/obj/item/gun/energy/gun/nuclear,
+/obj/item/gun/energy/gun/nuclear,
+/obj/item/gun/energy/gun/nuclear,
+/obj/item/gun/energy/gun/nuclear,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "iMF" = (
 /obj/item/flag/ninja,
 /obj/effect/turf_decal/siding/wood{
@@ -16674,34 +16695,8 @@
 	},
 /area/centcom/jail)
 "iNd" = (
-/obj/structure/closet/secure_closet/guncabinet{
-	layer = 2.9;
-	name = "combat shotgun"
-	},
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = 32
-	},
-/obj/machinery/light/spot{
-	dir = 8;
-	tag = "icon-tube1 (WEST)"
-	},
-/obj/item/ammo_box/shotgun/buck,
-/obj/item/ammo_box/shotgun/buck,
-/obj/item/ammo_box/shotgun/buck,
-/obj/item/gun/projectile/shotgun/automatic/combat,
-/obj/item/gun/projectile/shotgun/automatic/combat,
-/obj/item/gun/projectile/shotgun/automatic/combat,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/shuttle/gamma/space)
+/turf/simulated/wall/shuttle,
+/area/shuttle/gamma)
 "iNj" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -20335,21 +20330,22 @@
 	},
 /area/syndicate_mothership/elite_squad)
 "kHR" = (
-/obj/structure/closet/secure_closet/guncabinet{
-	layer = 2.9;
-	name = "advanced energy gun"
+/obj/machinery/recharger/wallcharger{
+	pixel_x = -24;
+	pixel_y = -12
 	},
-/obj/item/gun/energy/gun/nuclear,
-/obj/item/gun/energy/gun/nuclear,
-/obj/item/gun/energy/gun/nuclear,
-/obj/item/gun/energy/gun/nuclear,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/recharger/wallcharger{
+	pixel_x = -24;
+	pixel_y = -2
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = -24;
+	pixel_y = 8
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "kHS" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/paper_bin/nanotrasen{
@@ -25616,22 +25612,23 @@
 /turf/simulated/floor/wood,
 /area/centcom/specops)
 "mUo" = (
-/obj/machinery/recharger/wallcharger{
-	pixel_x = -24;
-	pixel_y = -12
+/obj/machinery/door/airlock/shuttle,
+/obj/structure/fans/tiny,
+/obj/docking_port/stationary/transit{
+	dir = 4;
+	dwidth = 4;
+	height = 6;
+	id = "gamma_transit";
+	name = "gamma in transit. IT SHOULD NOT BE IN TRANSIT";
+	pixel_x = -32;
+	turf_type = /turf/space/transit/south;
+	width = 7
 	},
-/obj/machinery/recharger/wallcharger{
-	pixel_x = -24;
-	pixel_y = -2
-	},
-/obj/machinery/recharger/wallcharger{
-	pixel_x = -24;
-	pixel_y = 8
-	},
+/obj/docking_port/mobile/gamma,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "mUu" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/grass/jungle/b,
@@ -28542,8 +28539,12 @@
 	},
 /area/shuttle/syndicate)
 "odz" = (
-/turf/simulated/wall/shuttle,
-/area/shuttle/gamma/space)
+/obj/machinery/door/airlock/shuttle,
+/obj/structure/fans/tiny,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/gamma)
 "odT" = (
 /obj/structure/chair/sofa/left{
 	dir = 1
@@ -29582,18 +29583,41 @@
 /turf/simulated/floor/wood,
 /area/centcom/specops)
 "oCU" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/machinery/power/apc{
+	name = "Gamma Armory APC";
+	pixel_y = -24
 	},
 /obj/structure/cable{
-	icon_state = "4-8"
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/obj/machinery/mech_bay_recharge_port/upgraded,
+/obj/structure/sign/securearea{
+	pixel_x = -32
+	},
+/obj/structure/closet/secure_closet/guncabinet,
+/obj/item/gun/rocketlauncher,
+/obj/item/ammo_casing/rocket,
+/obj/item/ammo_casing/rocket,
+/obj/item/ammo_casing/rocket,
+/obj/item/kitchen/knife/combat,
+/obj/item/kitchen/knife/combat,
+/obj/item/kitchen/knife/combat,
+/obj/item/grenade/chem_grenade/incendiary{
+	name = "Incendiary Grenade"
+	},
+/obj/item/grenade/clusterbuster,
+/obj/machinery/light/spot{
+	dir = 8;
+	tag = "icon-tube1 (WEST)"
+	},
+/obj/item/gun/projectile/automatic/m52,
+/obj/item/ammo_box/magazine/m52mag,
+/obj/item/ammo_box/magazine/m52mag,
+/obj/item/ammo_box/magazine/m52mag,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "oDi" = (
 /obj/effect/turf_decal/caution/stand_clear{
 	pixel_y = 8
@@ -29906,41 +29930,33 @@
 	},
 /area/syndicate_mothership/infteam)
 "oKD" = (
-/obj/machinery/power/apc{
-	name = "Gamma Armory APC";
-	pixel_y = -24
+/obj/structure/closet/secure_closet/guncabinet{
+	layer = 2.9;
+	name = "Enforcer"
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/item/ammo_box/magazine/enforcer/lethal,
+/obj/item/ammo_box/magazine/enforcer/lethal,
+/obj/item/ammo_box/magazine/enforcer/lethal,
+/obj/item/ammo_box/magazine/enforcer/lethal,
+/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
+	icon_state = "enforcer_red"
 	},
-/obj/structure/sign/securearea{
-	pixel_x = -32
+/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
+	icon_state = "enforcer_red"
 	},
-/obj/structure/closet/secure_closet/guncabinet,
-/obj/item/gun/rocketlauncher,
-/obj/item/ammo_casing/rocket,
-/obj/item/ammo_casing/rocket,
-/obj/item/ammo_casing/rocket,
-/obj/item/kitchen/knife/combat,
-/obj/item/kitchen/knife/combat,
-/obj/item/kitchen/knife/combat,
-/obj/item/grenade/chem_grenade/incendiary{
-	name = "Incendiary Grenade"
+/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
+	icon_state = "enforcer_red"
 	},
-/obj/item/grenade/clusterbuster,
-/obj/machinery/light/spot{
-	dir = 8;
-	tag = "icon-tube1 (WEST)"
+/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
+	icon_state = "enforcer_red"
 	},
-/obj/item/gun/projectile/automatic/m52,
-/obj/item/ammo_box/magazine/m52mag,
-/obj/item/ammo_box/magazine/m52mag,
-/obj/item/ammo_box/magazine/m52mag,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "oKG" = (
 /turf/simulated/floor/plasteel{
 	dir = 1;
@@ -35035,6 +35051,35 @@
 /obj/structure/table/wood/fancy/orange,
 /turf/simulated/floor/carpet/royalblack,
 /area/shuttle/trade/sol)
+"rfv" = (
+/obj/structure/closet/secure_closet/guncabinet{
+	layer = 2.9;
+	name = "combat shotgun"
+	},
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = 32
+	},
+/obj/machinery/light/spot{
+	dir = 8;
+	tag = "icon-tube1 (WEST)"
+	},
+/obj/item/ammo_box/shotgun/buck,
+/obj/item/ammo_box/shotgun/buck,
+/obj/item/ammo_box/shotgun/buck,
+/obj/item/gun/projectile/shotgun/automatic/combat,
+/obj/item/gun/projectile/shotgun/automatic/combat,
+/obj/item/gun/projectile/shotgun/automatic/combat,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/gamma)
 "rfE" = (
 /obj/structure/fans/tiny/invisible,
 /turf/simulated/floor/plasteel{
@@ -38789,29 +38834,10 @@
 	},
 /area/syndicate_mothership)
 "sTJ" = (
-/obj/structure/closet/secure_closet/guncabinet{
-	layer = 2.9;
-	name = "L.W.A.P. Sniper Rifle"
-	},
-/obj/item/gun/energy/sniperrifle,
-/obj/item/gun/energy/sniperrifle,
-/obj/machinery/light/spot{
-	dir = 4;
-	tag = "icon-tube1 (EAST)"
-	},
-/obj/machinery/ai_status_display{
-	pixel_y = 32
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "sTV" = (
 /obj/machinery/light/small,
 /obj/structure/chair/comfy/red{
@@ -43890,22 +43916,29 @@
 	},
 /area/centcom/specops)
 "vfO" = (
-/obj/machinery/recharger/wallcharger{
-	pixel_x = 32;
-	pixel_y = -12
+/obj/structure/closet/secure_closet/guncabinet{
+	layer = 2.9;
+	name = "L.W.A.P. Sniper Rifle"
 	},
-/obj/machinery/recharger/wallcharger{
-	pixel_x = 32;
-	pixel_y = 8
+/obj/item/gun/energy/sniperrifle,
+/obj/item/gun/energy/sniperrifle,
+/obj/machinery/light/spot{
+	dir = 4;
+	tag = "icon-tube1 (EAST)"
 	},
-/obj/machinery/recharger/wallcharger{
-	pixel_x = 32;
-	pixel_y = -2
+/obj/machinery/ai_status_display{
+	pixel_y = 32
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/gamma/space)
+/area/shuttle/gamma)
 "vfR" = (
 /obj/machinery/recharge_station/upgraded,
 /turf/simulated/floor/shuttle{
@@ -43951,10 +43984,8 @@
 	},
 /area/syndicate_mothership)
 "vhb" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/shuttle/gamma/space)
+/turf/simulated/wall/shuttle/overspace,
+/area/shuttle/gamma)
 "vhg" = (
 /obj/machinery/vending/cola/free,
 /obj/structure/closet/medical_wall{
@@ -44460,8 +44491,8 @@
 	},
 /area/shuttle/escape)
 "vsD" = (
-/turf/simulated/wall/shuttle/overspace,
-/area/shuttle/gamma/space)
+/turf/simulated/wall/shuttle/onlyselfsmooth,
+/area/shuttle/gamma)
 "vsU" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -50634,15 +50665,15 @@ ymc
 ymc
 ymc
 ymc
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
+ymc
+ymc
+ymc
+ymc
+ymc
+ymc
+ymc
+ymc
+ymc
 ymc
 ymc
 ymc
@@ -50891,14 +50922,14 @@ ubE
 ubE
 ubE
 ymc
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
+vhb
+iNd
+iNd
+vsD
+mUo
+vsD
+vhb
+ymc
 mVX
 ymc
 ubE
@@ -51148,14 +51179,14 @@ ubE
 ubE
 ubE
 ymc
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
+iNd
+rfv
+kHR
+daJ
+sTJ
+oCU
+iNd
+ymc
 mVX
 ymc
 ubE
@@ -51405,14 +51436,14 @@ ubE
 ubE
 ubE
 ymc
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
+iNd
+oKD
+sTJ
+sTJ
+sTJ
+esw
+iNd
+ymc
 mVX
 ymc
 ubE
@@ -51662,14 +51693,14 @@ ubE
 ubE
 ubE
 ymc
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
+iNd
+iMB
+sTJ
+sTJ
+sTJ
+cmn
+iNd
+ymc
 mVX
 ymc
 ubE
@@ -51919,14 +51950,14 @@ ubE
 ubE
 ubE
 ymc
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
+iNd
+vfO
+fRj
+sTJ
+sTJ
+gAk
+iNd
+ymc
 mVX
 ymc
 ubE
@@ -52176,14 +52207,14 @@ ubE
 ubE
 ubE
 ymc
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
+vhb
+iNd
+vsD
+odz
+vsD
+iNd
+vhb
+ymc
 mVX
 ymc
 ubE
@@ -52433,14 +52464,14 @@ ubE
 ubE
 ubE
 ymc
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
-mVX
+ymc
+ymc
+ymc
+ymc
+ymc
+ymc
+ymc
+ymc
 mVX
 ymc
 ubE
@@ -107856,13 +107887,13 @@ mVX
 mVX
 mVX
 uWy
-vsD
-odz
-odz
-irL
+eWA
+eWA
+eWA
+eWA
 bLc
-irL
-vsD
+eWA
+eWA
 uWy
 jMD
 mVX
@@ -108113,13 +108144,13 @@ mVX
 mVX
 mVX
 jMD
-odz
-iNd
-mUo
-fRj
-vhb
-oKD
-odz
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
 jMD
 mVX
 mVX
@@ -108370,13 +108401,13 @@ mVX
 mVX
 mVX
 mVX
-odz
-esw
-vhb
-vhb
-vhb
-oCU
-odz
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
 jMD
 mVX
 mVX
@@ -108627,13 +108658,13 @@ mVX
 mVX
 mVX
 mVX
-odz
-kHR
-vhb
-vhb
-vhb
-gAk
-odz
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
 jMD
 mVX
 mVX
@@ -108884,13 +108915,13 @@ mVX
 mVX
 mVX
 mVX
-odz
-sTJ
-vfO
-vhb
-vhb
-iMB
-odz
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
 jMD
 mVX
 mVX
@@ -109141,13 +109172,13 @@ mVX
 mVX
 mVX
 mVX
-vsD
-odz
-irL
-bLc
-irL
-odz
-vsD
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
+eWA
 mVX
 mVX
 mVX

@@ -136,7 +136,7 @@
 		. = ..()
 	queue_smooth_neighbors(src)
 
-/turf/simulated/AfterChange(ignore_air = FALSE, keep_cabling = FALSE)
+/turf/simulated/AfterChange(ignore_air = FALSE, keep_cabling = FALSE, oldType)
 	..()
 	RemoveLattice()
 	if(!ignore_air && air && SSair)
@@ -165,5 +165,10 @@
 			return FALSE
 	return TRUE
 
+/turf/simulated/zAirIn(direction, turf/source)
+	return (!blocks_air && (direction == DOWN))
+
+/turf/simulated/zAirOut(direction, turf/source)
+	return (!blocks_air && (direction == UP))
 
 #undef WATER_WEAKEN_TIME

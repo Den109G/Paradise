@@ -98338,8 +98338,18 @@
 /turf/simulated/floor/plating,
 /area/maintenance/portsolar)
 "xEp" = (
-/turf/space,
-/area/shuttle/gamma/station)
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 4;
+	height = 6;
+	id = "gamma_home";
+	name = "gamma dock";
+	width = 7
+	},
+/turf/space{
+	icon_state = "black"
+	},
+/area/space)
 "xEq" = (
 /obj/effect/landmark/event/lightsout,
 /turf/simulated/floor/plasteel{
@@ -112265,13 +112275,13 @@ rNK
 rNK
 rNK
 rNK
+jqn
+jqn
+jqn
+jqn
 xEp
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
+jqn
+jqn
 cRv
 abW
 eku
@@ -112522,13 +112532,13 @@ rNK
 rNK
 rNK
 rNK
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
 tYz
 tYz
 tYz
@@ -112779,13 +112789,13 @@ jqn
 jqn
 jqn
 rNK
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
 tYz
 lcL
 mCZ
@@ -113036,13 +113046,13 @@ jqn
 jqn
 jqn
 rNK
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
 tYz
 oYb
 pgS
@@ -113293,13 +113303,13 @@ jqn
 jqn
 jqn
 rNK
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
 tYz
 fEy
 pgS
@@ -113550,13 +113560,13 @@ jqn
 jqn
 jqn
 rNK
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
-xEp
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
+jqn
 tYz
 gVa
 khd

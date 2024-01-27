@@ -17,22 +17,6 @@
 	var/terminator_mode = STAIR_TERMINATOR_AUTOMATIC
 	var/turf/listeningTo
 
-/obj/structure/stairs/north/Initialize(mapload)
-	. = ..()
-	setDir(NORTH)
-
-/obj/structure/stairs/south/Initialize(mapload)
-	. = ..()
-	setDir(SOUTH)
-
-/obj/structure/stairs/east/Initialize(mapload)
-	. = ..()
-	setDir(EAST)
-
-/obj/structure/stairs/west/Initialize(mapload)
-	. = ..()
-	setDir(WEST)
-
 /obj/structure/stairs/wood
 	icon_state = "stairs_wood"
 
