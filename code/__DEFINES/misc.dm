@@ -10,6 +10,8 @@
 //#define SOUTHEAST 6
 //#define NORTHWEST 9
 //#define SOUTHWEST 10
+//#define UP 		16
+//#define DOWN 		32
 
 //Security levels
 #define SEC_LEVEL_GREEN	0

@@ -8,7 +8,8 @@
 	var/intact = TRUE
 	var/turf/baseturf = /turf/baseturf_bottom
 	var/slowdown = 0 //negative for faster, positive for slower
-	var/transparent_floor = FALSE // It's a check that determines if the turf is transparent to reveal the stuff(pipes, safe, cables and e.t.c.) without looking on intact
+	// It's a check that determines if the turf is transparent to reveal the stuff(pipes, safe, cables and e.t.c.) without looking on intact
+	var/transparent_floor = TURF_NONTRANSPARENT
 
 	var/real_layer = TURF_LAYER
 	layer = MAP_EDITOR_TURF_LAYER
@@ -29,7 +30,8 @@
 	//Properties for both
 	var/temperature = T20C
 
-	var/blocks_air = 0
+	//If set TRUE, won't init gas_mixture/air and shouldn't interact with atmos.
+	var/blocks_air = FALSE
 
 	var/datum/pathnode/PNode = null //associated PathNode in the A* algorithm
 
@@ -243,15 +245,12 @@
 		if(null)
 			return
 		if(/turf/baseturf_bottom)
-			if(check_level_trait(z, ZTRAIT_OPENSPACE))
-				if(istype(get_area(src), /area/space))
-					path = /turf/space/openspace
-				else
-					path = /turf/simulated/openspace
-			else if(check_level_trait(z, ZTRAIT_LAVALAND))
-				path = /turf/simulated/floor/plating/lava/smooth/lava_land_surface
-			else
-				path = /turf/space
+			path = check_level_trait(z, ZTRAIT_BASETURF) || /turf/space
+			if (!ispath(path))
+				path = text2path(path)
+				if (!ispath(path))
+					warning("Z-level [z] has invalid baseturf '[check_level_trait(z, ZTRAIT_BASETURF)]'")
+					path = /turf/space
 	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
@@ -263,6 +262,7 @@
 	var/old_blueprint_data = blueprint_data
 	var/old_obscured = obscured
 	var/old_corners = corners
+	var/old_type = type
 
 	BeforeChange()
 
@@ -274,7 +274,7 @@
 		W.baseturf = old_baseturf
 
 	if(!defer_change)
-		W.AfterChange(ignore_air)
+		W.AfterChange(ignore_air, oldType = old_type)
 	W.blueprint_data = old_blueprint_data
 
 	recalc_atom_opacity()
@@ -307,7 +307,7 @@
 	return FALSE
 
 // I'm including `ignore_air` because BYOND lacks positional-only arguments
-/turf/proc/AfterChange(ignore_air = FALSE, keep_cabling = FALSE) //called after a turf has been replaced in ChangeTurf()
+/turf/proc/AfterChange(ignore_air = FALSE, keep_cabling = FALSE, oldType = null) //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
 	CalculateAdjacentTurfs()
 
@@ -581,11 +581,11 @@
 
 //direction is direction of travel of air
 /turf/proc/zAirIn(direction, turf/source)
-	return (direction == DOWN)
+	return FALSE
 
 //direction is direction of travel of air
 /turf/proc/zAirOut(direction, turf/source)
-	return (direction == UP)
+	return FALSE
 
 /turf/proc/multiz_turf_del(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
@@ -644,8 +644,6 @@
 	falling.set_currently_z_moving(CURRENTLY_Z_FALLING)
 	living_buckled?.set_currently_z_moving(CURRENTLY_Z_FALLING)
 
-	if(isliving)
-		add_attack_logs(falling, falling, "fell into a [src]")
 	falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
 	target.zImpact(falling, levels, src)
 	return TRUE

@@ -1,8 +1,6 @@
 //Xenobio control console
 /mob/camera/aiEye/remote/xenobio
 	visible_icon = 1
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "camera_target"
 	var/allowed_area = null
 
 /mob/camera/aiEye/remote/xenobio/New(loc)

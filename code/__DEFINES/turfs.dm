@@ -7,3 +7,7 @@
 #define TURF_PATHING_PASS_NO 2
 ///Turf trait for when a turf is transparent
 #define TURF_Z_TRANSPARENT_TRAIT "turf_z_transparent"
+
+#define TURF_NONTRANSPARENT 0 // Don't use this. Use !transparent_floor
+#define TURF_TRANSPARENT 1
+#define TURF_FULLTRANSPARENT 2

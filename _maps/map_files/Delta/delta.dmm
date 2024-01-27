@@ -130012,8 +130012,18 @@
 /turf/simulated/floor/wood/fancy/cherry,
 /area/crew_quarters/courtroom)
 "ylx" = (
-/turf/space,
-/area/shuttle/gamma/station)
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 4;
+	height = 6;
+	id = "gamma_home";
+	name = "gamma dock";
+	width = 7
+	},
+/turf/space{
+	icon_state = "black"
+	},
+/area/space)
 "ylF" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -189547,13 +189557,13 @@ fSo
 sAQ
 dbt
 coE
+yhg
+yhg
+yhg
+yhg
 ylx
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
+yhg
+yhg
 sws
 uCv
 gLr
@@ -189804,13 +189814,13 @@ uoA
 gzs
 hkr
 coE
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
 tRb
 iLb
 xQM
@@ -190061,13 +190071,13 @@ fWD
 eqO
 wyD
 coE
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
 wxC
 srS
 bmZ
@@ -190318,13 +190328,13 @@ ihp
 hmo
 wyD
 coE
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
 wxC
 wxC
 vkC
@@ -190575,13 +190585,13 @@ xkY
 coE
 coE
 coE
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
 coE
 coE
 vkC
@@ -190832,13 +190842,13 @@ acF
 coE
 aaq
 coE
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
-ylx
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
+yhg
 coE
 coE
 ukt

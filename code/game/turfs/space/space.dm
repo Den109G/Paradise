@@ -22,13 +22,15 @@
 	clawfootstep = null
 	heavyfootstep = null
 
+	transparent_floor = TURF_FULLTRANSPARENT
+
 	//when this be added to vis_contents of something it be associated with something on clicking,
 	//important for visualisation of turf in openspace and interraction with openspace that show you turf.
 	vis_flags = VIS_INHERIT_ID
 
 /turf/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
-	if(!istype(src, /turf/space/transit))
+	if(!istype(src, /turf/space/transit) && !istype(src, /turf/space/openspace))
 		icon_state = SPACE_ICON_STATE
 	vis_contents.Cut() //removes inherited overlays
 
@@ -55,7 +57,7 @@
 	if(light_sources) // Turn off starlight, if present
 		set_light(0)
 
-/turf/space/AfterChange(ignore_air, keep_cabling = FALSE)
+/turf/space/AfterChange(ignore_air, keep_cabling = FALSE, oldType)
 	..()
 	var/datum/space_level/S = GLOB.space_manager.get_zlev(z)
 	S.add_to_transit(src)
