@@ -350,6 +350,10 @@
 	if(ismob(user.loc) || user.lying || user.IsStunned() || user.buckled || user.stat)
 		to_chat(user, "<span class='warning'>You can't jump right now!</span>")
 		return
+	var/turf/turf_to_check = get_turf(user)
+	if(turf_to_check.transparent_floor == TURF_FULLTRANSPARENT) // open
+		to_chat(user, "span class='warning'>You need a ground to jump from!</span>")
+		return
 
 	if(isturf(user.loc))
 		if(user.restrained())//Why being pulled while cuffed prevents you from moving
@@ -379,8 +383,11 @@
 			else user.pixel_y -= 8
 			sleep(1)
 		user.flying = prevFlying
+		if(!user.flying && !user.currently_z_moving) // in case he could fly after
+			var/turf/pitfall = get_turf(user)
+			pitfall?.zFall(user)
 
-		if((FAT in user.mutations) && prob(66))
+		else if((FAT in user.mutations) && prob(66))
 			user.visible_message("<span class='danger'>[user.name]</b> crashes due to [user.p_their()] heavy weight!</span>")
 			//playsound(user.loc, 'zhit.wav', 50, 1)
 			user.AdjustWeakened(20 SECONDS)
