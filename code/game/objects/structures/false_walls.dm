@@ -20,6 +20,7 @@
 	var/opening = FALSE
 
 	density = TRUE
+	obj_flags = BLOCK_Z_IN_DOWN | BLOCK_Z_IN_UP// just in case in up. But falsewall should be on the floor.
 	opacity = TRUE
 	max_integrity = 100
 
@@ -83,6 +84,7 @@
 		do_the_flick()
 		sleep(4)
 		density = 0
+		obj_flags &= ~BLOCK_Z_IN_DOWN
 		set_opacity(0)
 		update_icon(0)
 	else
@@ -93,6 +95,7 @@
 		add_fingerprint(user)
 		do_the_flick()
 		density = 1
+		obj_flags |= BLOCK_Z_IN_DOWN
 		sleep(4)
 		set_opacity(1)
 		update_icon()
