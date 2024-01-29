@@ -9,7 +9,7 @@
 #define PLANE_SPACE -95
 #define PLANE_SPACE_PARALLAX -90
 
-// #define TRANSPARENT_FLOOR_PLANE -10 //Transparent plane that shows openspace underneath the floor // У нас код хорошо справляется, а это ломает
+#define OPENSPACE_LAYER 17 //Openspace layer over all
 #define OPENSPACE_PLANE -9 //Openspace plane below all turfs
 #define OPENSPACE_BACKDROP_PLANE -8 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
@@ -147,8 +147,6 @@
 
 // This should always be on top. No exceptions.
 #define HUD_PLANE_DEBUGVIEW 40
-
-#define OPENSPACE_LAYER 600 //Openspace layer over all
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
