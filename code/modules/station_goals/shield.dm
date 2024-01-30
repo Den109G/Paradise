@@ -3,7 +3,7 @@
 // Спутники активируются, создавая щит, который будет препятствовать прохождению неорганической материи.
 /datum/station_goal/station_shield
 	name = "Station Shield"
-	var/coverage_goal = 12500
+	var/coverage_goal = 12500 // for 1 z level
 
 /datum/station_goal/station_shield/get_report()
 	return {"<b>Сооружение щитов станции</b><br>
@@ -20,6 +20,9 @@
 	P = SSshuttle.supply_packs["[/datum/supply_packs/misc/station_goal/shield_sat_control]"]
 	P.special_enabled = TRUE
 	supply_list.Add(P)
+	//Changes
+	var/list/station_levels = levels_by_trait(STATION_LEVEL)
+	coverage_goal = coverage_goal * station_levels.len
 
 /datum/station_goal/station_shield/check_completion()
 	if(..())
