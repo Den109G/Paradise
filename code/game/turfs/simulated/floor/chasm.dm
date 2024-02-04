@@ -55,6 +55,10 @@
 	if(!drop_stuff())
 		STOP_PROCESSING(SSprocessing, src)
 
+/turf/simulated/floor/chasm/Initialize()
+	. = ..()
+	drop_z = level_name_to_num(EMPTY_AREA)
+
 /turf/simulated/floor/chasm/ex_act()
 	return
 
@@ -157,6 +161,8 @@
 	if(falling_atoms[AM])
 		return FALSE
 	if(!isliving(AM) && !isobj(AM))
+		return FALSE
+	if(iseffect(AM))
 		return FALSE
 	if(!AM.simulated || is_type_in_typecache(AM, forbidden_types) || AM.throwing)
 		return FALSE
