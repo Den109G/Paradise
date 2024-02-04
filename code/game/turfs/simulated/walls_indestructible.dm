@@ -166,3 +166,15 @@
 	icon_state = "gingerbread"
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/simulated/wall/indestructible/gingerbread, /obj/structure/falsewall/gingerbread, /turf/simulated/wall/mineral/gingerbread)
+
+
+/turf/simulated/wall/indestructible/invisible
+	name = "Deep space"
+	desc = "Deep space nothing"
+	icon = null
+	icon_state = null
+
+// used with /effect/view_portal in order to get rid of dynamic lighting.
+/turf/simulated/wall/indestructible/invisible/view_portal
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED

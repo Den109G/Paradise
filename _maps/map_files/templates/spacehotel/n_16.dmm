@@ -4,7 +4,7 @@
 /area/template_noop)
 "b" = (
 /turf/simulated/wall/indestructible{
-	icon_state = "sandstone2"
+	icon_state = "sandstone6"
 	},
 /area/template_noop)
 "c" = (
@@ -95,21 +95,24 @@
 	},
 /area/template_noop)
 "n" = (
-/turf/simulated/wall/indestructible{
-	icon = null;
-	dynamic_lighting = 0
-	},
+/turf/simulated/floor/indestructible/view_portal,
 /area/template_noop)
 "o" = (
+/turf/simulated/wall/indestructible/invisible/view_portal,
+/area/template_noop)
+"E" = (
+/turf/simulated/wall/indestructible{
+	icon_state = "sandstone10"
+	},
+/area/template_noop)
+"M" = (
 /obj/effect/view_portal/visual{
-	dist = 6;
 	frustrum = 1;
 	id = "beach";
-	radius = 1
+	radius = 1;
+	opacity = 0
 	},
-/turf/simulated/floor/indestructible{
-	icon_state = "wood"
-	},
+/turf/simulated/floor/indestructible/view_portal,
 /area/template_noop)
 
 (1,1,1) = {"
@@ -125,17 +128,17 @@ a
 a
 b
 f
+f
 i
-n
-n
+o
 a
 "}
 (3,1,1) = {"
 a
+j
 c
 g
 j
-n
 n
 a
 "}
@@ -143,27 +146,27 @@ a
 a
 d
 d
+d
 k
-o
-n
+M
 a
 "}
 (5,1,1) = {"
 a
+l
 e
 h
 l
-n
 n
 a
 "}
 (6,1,1) = {"
 a
-b
+E
+f
 f
 m
-n
-n
+o
 a
 "}
 (7,1,1) = {"
