@@ -309,13 +309,13 @@
 
 	var/currcc_tag
 
-/obj/item/destTagger/attack_self(mob/user)
-	ui_interact(user)
+/obj/item/destTagger/ui_state(mob/user)
+	return GLOB.default_state
 
-/obj/item/destTagger/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = TRUE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/destTagger/ui_interact(mob/user, datum/tgui/ui = null, force_open = FALSE)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "DestinationTagger", name, 395, 350, master_ui, state)
+		ui = new(user, src, "DestinationTagger", name, name, 395, 350)
 		ui.open()
 
 /obj/item/destTagger/ui_data(mob/user)
