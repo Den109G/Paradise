@@ -210,6 +210,10 @@
 			KeyUp(keycode)
 		return
 
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
+		return
+
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
