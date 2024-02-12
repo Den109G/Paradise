@@ -29,6 +29,13 @@
 	user = to_user
 	borg = to_borg
 
+/datum/borgpanel/ui_state(mob/user)
+	if(check_rights(R_ADMIN, FALSE))
+		return GLOB.admin_state
+	if(issilicon(user))
+		return GLOB.conscious_state
+	return GLOB.default_state
+
 /datum/borgpanel/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

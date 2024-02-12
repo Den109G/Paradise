@@ -21,14 +21,14 @@
  */
 /datum/proc/ui_status(mob/user, datum/ui_state/state)
 	var/src_object = ui_host(user)
-	. = STATUS_CLOSE
+	. = UI_CLOSE
 	if(!state)
 		return
 
 	if(isobserver(user))
 		// If they turn on ghost AI control, admins can always interact.
 		if(user.client.advanced_admin_interaction)
-			. = max(., STATUS_INTERACTIVE)
+			. = max(., UI_INTERACTIVE)
 
 		// Regular ghosts can always at least view if in range.
 		var/clientviewlist = getviewsize(user.client.view)
@@ -51,7 +51,7 @@
  * return UI_state The state of the UI.
  */
 /datum/ui_state/proc/can_use_topic(src_object, mob/user)
-	return STATUS_CLOSE // Don't allow interaction by default.
+	return UI_CLOSE // Don't allow interaction by default.
 
 /**
  * public
@@ -62,21 +62,21 @@
  */
 /mob/proc/shared_ui_interaction(src_object)
 	if(!client) // Close UIs if mindless.
-		return STATUS_CLOSE
+		return UI_CLOSE
 	else if(stat) // Disable UIs if unconcious.
-		return STATUS_DISABLED
+		return UI_DISABLED
 	else if(incapacitated()) // Update UIs if incapicitated but concious.
 		return STATUS_UPDATE
-	return STATUS_INTERACTIVE
+	return UI_INTERACTIVE
 
 /mob/living/silicon/ai/shared_ui_interaction(src_object)
 	if(lacks_power()) // Disable UIs if the AI is unpowered.
-		return STATUS_DISABLED
+		return UI_DISABLED
 	return ..()
 
 /mob/living/silicon/robot/shared_ui_interaction(src_object)
 	if(!cell || cell.charge <= 0 || lockcharge) // Disable UIs if the Borg is unpowered or locked.
-		return STATUS_DISABLED
+		return UI_DISABLED
 	return ..()
 
 /**
@@ -105,21 +105,21 @@
  */
 /mob/living/proc/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE)
 	if(viewcheck && !(src_object in view(src))) // If the object is obscured, close it.
-		return STATUS_CLOSE
+		return UI_CLOSE
 
 	var/dist = get_dist(src_object, src)
 	if(dist <= 1) // Open and interact if 1-0 tiles away.
-		return STATUS_INTERACTIVE
+		return UI_INTERACTIVE
 	else if(dist <= 2) // View only if 2-3 tiles away.
 		return STATUS_UPDATE
 	else if(dist <= 5) // Disable if 5 tiles away.
-		return STATUS_DISABLED
-	return STATUS_CLOSE // Otherwise, we got nothing.
+		return UI_DISABLED
+	return UI_CLOSE // Otherwise, we got nothing.
 
 /mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object)
 	if((TK in mutations) && (get_dist(src, src_object) <= 2))
-		return STATUS_INTERACTIVE
+		return UI_INTERACTIVE
 	if(ismecha(loc))
 		if(get_dist(loc, src_object) <= 1)
-			return STATUS_INTERACTIVE
+			return UI_INTERACTIVE
 	return ..()

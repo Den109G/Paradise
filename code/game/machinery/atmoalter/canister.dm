@@ -287,10 +287,13 @@ update_flag
 	add_fingerprint(user)
 	return ui_interact(user)
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = TRUE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, datum/tgui/ui = null, force_open = TRUE)
+	ui = SStgui.try_update_ui(user, src, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "Canister", name, 600, 350, master_ui, state)
+		ui = new(user, src, "Canister", name, 600, 350)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data()

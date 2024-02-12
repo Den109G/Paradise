@@ -644,7 +644,7 @@ About the new airlock wires panel:
 		to_chat(user, span_warning("AI control for \the [src] interface has been disabled."))
 		if(!canAIControl() && canAIHack())
 			hack(user)
-		return STATUS_CLOSE
+		return UI_CLOSE
 	. = ..()
 
 /obj/machinery/door/airlock/proc/hack(mob/user)

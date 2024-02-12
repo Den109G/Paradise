@@ -8,5 +8,5 @@ GLOBAL_DATUM_INIT(deep_inventory_state, /datum/ui_state/deep_inventory_state, ne
 
 /datum/ui_state/deep_inventory_state/can_use_topic(src_object, mob/user)
 	if(!user.contains(src_object))
-		return STATUS_CLOSE
+		return UI_CLOSE
 	return user.shared_ui_interaction(src_object)

@@ -782,16 +782,30 @@
 
 	return thresholds
 
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/alarm/ui_state(mob/user)
+	if(isAI(user))
+		var/mob/living/silicon/ai/AI = user
+		if(!AI.lacks_power() || AI.apc_override)
+			return GLOB.always_state
+
+	if(ishuman(user))
+		for(var/obj/machinery/computer/atmoscontrol/AC in range(1, user))
+			var/datum/tgui/active_ui = SStgui.get_open_ui(user, AC)
+			if(istype(active_ui) && !AC.stat && is_authenticated(user, active_ui))
+				return GLOB.always_state
+
+	return GLOB.default_state
+
+/obj/machinery/alarm/ui_interact(mob/user, datum/tgui/ui = null, force_open = FALSE)
+	ui = SStgui.try_update_ui(user, src, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "AirAlarm", name, 570, 410, master_ui, state)
+		ui = new(user, src, "AirAlarm", name, 570, 410)
 		ui.open()
 
-/obj/machinery/alarm/proc/is_authenticated(mob/user, datum/tgui/ui=null)
+/obj/machinery/alarm/proc/is_authenticated(mob/user, datum/tgui/ui = null, bypass = FALSE)
 	// Return true if they are connecting with a remote console
-	// DO NOT CHANGE THIS TO USE ISTYPE, IT WILL NOT WORK
-	if(ui?.master_ui?.src_object.type == /datum/ui_module/atmos_control)
+	// lol this is a wank hack, please don't shoot me
+	for(var/obj/machinery/computer/atmoscontrol/control in orange(1, user))
 		return TRUE
 	if(user.can_admin_interact())
 		return TRUE
@@ -802,13 +816,13 @@
 
 /obj/machinery/alarm/ui_status(mob/user, datum/ui_state/state)
 	if(buildstage != 2)
-		return STATUS_CLOSE
+		return UI_CLOSE
 
 	if(aidisabled && (isAI(user) || isrobot(user)))
 		to_chat(user, span_warning("AI control for \the [src] interface has been disabled."))
-		return STATUS_CLOSE
+		return UI_CLOSE
 
-	. = shorted ? STATUS_DISABLED : STATUS_INTERACTIVE
+	. = shorted ? UI_DISABLED : UI_INTERACTIVE
 
 	return min(..(), .)
 
@@ -854,10 +868,8 @@
 					"widenet",
 					"scrubbing",
 					"direction")
-					var/val
-					if(params["val"])
-						val=text2num(params["val"])
-					else
+					var/val = isnum(params["val"]) ? params["val"] : text2num(params["val"])
+					if(isnull(val))
 						var/newval = input("Enter new value") as num|null
 						if(isnull(newval))
 							return

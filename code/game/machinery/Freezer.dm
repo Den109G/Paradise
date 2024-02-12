@@ -117,10 +117,13 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = TRUE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/unary/thermomachine/ui_state(mob/user)
+	return GLOB.default_state
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/ui_interact(mob/user, datum/tgui/ui = null, force_open = TRUE)
+	ui = SStgui.try_update_ui(user, src, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "GasFreezer", "Газоохладительная система", 560, 200)
+		ui = new(user, src, "GasFreezer", name, 560, 200)
 		ui.open()
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/ui_data(mob/user)
@@ -286,10 +289,13 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/heat_reservoir/heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = TRUE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/ui_state(mob/user)
+	return GLOB.default_state
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/ui_interact(mob/user, datum/tgui/ui = null, force_open = TRUE)
+	ui = SStgui.try_update_ui(user, src, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "GasFreezer", "Газонагревательная система", 560, 200)
+		ui = new(user, src, "GasFreezer", name, 560, 200)
 		ui.open()
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/ui_data(mob/user)

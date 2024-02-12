@@ -38,7 +38,7 @@
 	/// Holder for the json string, that is sent during the initial update
 	var/_initial_update
 	/// The status/visibility of the UI.
-	var/status = STATUS_INTERACTIVE
+	var/status = UI_INTERACTIVE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
 	/// The parent UI.
@@ -243,7 +243,7 @@
 			update_status(push = FALSE)
 			// Bail if UI is not interactive or usr calling Topic
 			// is not the UI user.
-			if(status != STATUS_INTERACTIVE)
+			if(status != UI_INTERACTIVE)
 				return
 			var/key = params["key"]
 			var/value = params["value"]
@@ -302,7 +302,7 @@
 	if(!initialized)
 		return
 	// Cannot update UI, we have no visibility.
-	if(status <= STATUS_DISABLED && !force)
+	if(status <= UI_DISABLED && !force)
 		return
 	// Send the new JSON to the update() Javascript function.
 	user << output(
@@ -332,7 +332,7 @@
 	if(master_ui)
 		status = min(status, master_ui.status)
 	set_status(status, push)
-	if(status == STATUS_CLOSE)
+	if(status == UI_CLOSE)
 		close()
 
 /**
@@ -346,14 +346,14 @@
 /datum/tgui/proc/set_status(status, push = FALSE)
 	// Only update if status has changed.
 	if(src.status != status)
-		if(src.status == STATUS_DISABLED)
+		if(src.status == UI_DISABLED)
 			src.status = status
 			if(push)
 				update()
 		else
 			src.status = status
 			// Update if the UI just because disabled, or a push is requested.
-			if(status == STATUS_DISABLED || push)
+			if(status == UI_DISABLED || push)
 				push_data(null, force = TRUE)
 
 /datum/tgui/proc/log_message(message)

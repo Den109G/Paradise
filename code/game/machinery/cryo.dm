@@ -209,10 +209,13 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/unary/cryo_cell/ui_state(mob/user)
+	return GLOB.default_state
+
+/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, datum/tgui/ui = null, force_open = FALSE)
+	ui = SStgui.try_update_ui(user, src, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "Cryo", "Криокапсула", 520, 490)
+		ui = new(user, src, "Cryo", "Cryo Cell", 520, 500)
 		ui.open()
 
 /obj/machinery/atmospherics/unary/cryo_cell/ui_data(mob/user)
@@ -499,7 +502,7 @@
 			return
 		go_out()//and release him from the eternal prison.
 	else
-		if(usr.default_can_use_topic(src) != STATUS_INTERACTIVE)
+		if(usr.default_can_use_topic(src) != UI_INTERACTIVE)
 			return
 		if(usr.incapacitated()) //are you cuffed, dying, lying, stunned or other
 			return

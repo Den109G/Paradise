@@ -8,11 +8,11 @@ GLOBAL_DATUM_INIT(physical_state, /datum/ui_state/physical, new)
 
 /datum/ui_state/physical/can_use_topic(src_object, mob/user)
 	. = user.shared_ui_interaction(src_object)
-	if(. > STATUS_CLOSE)
+	if(. > UI_CLOSE)
 		return min(., user.physical_can_use_topic(src_object))
 
 /mob/proc/physical_can_use_topic(src_object)
-	return STATUS_CLOSE
+	return UI_CLOSE
 
 /mob/living/simple_animal/revenant/physical_can_use_topic(src_object)
 	return STATUS_UPDATE
