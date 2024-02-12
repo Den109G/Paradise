@@ -6,7 +6,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "boris_blank"
 	var/blank_icon = "boris_blank"
-	var/searching_icon = "boris_recharging"
+	var/searching_icon = "boris_searching"
 	var/occupied_icon = "boris"
 	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "biotech=3;programming=3;plasmatech=2"
