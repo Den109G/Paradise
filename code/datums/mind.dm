@@ -1239,7 +1239,7 @@
 						new_objective.explanation_text = "Absorb [target_number] compatible genomes."
 					if("blood")
 						new_objective = new /datum/objective/blood
-						new_objective.explanation_text = "Накопить не менее [target_number] единиц крови."
+						new_objective.explanation_text = "Accumulate at least [target_number] total units of blood."
 				new_objective.owner = src
 				new_objective.target_amount = target_number
 
@@ -1593,7 +1593,7 @@
 					return
 
 				remove_goon_vampire_role()
-				to_chat(current, "<FONT color='red' size = 3><B>Вы ослабли и потеряли свои силы! Вы больше не вампир и теперь останетесь в своей текущей форме!</B></FONT>")
+				to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a vampire and are stuck in your current form!</B></FONT>")
 				log_admin("[key_name(usr)] has de-goon-vampired [key_name(current)]")
 				message_admins("[key_name_admin(usr)] has de-goon-vampired [key_name_admin(current)]")
 
@@ -1643,7 +1643,7 @@
 			if("autoobjectives")
 				var/datum/antagonist/goon_vampire/g_vamp = has_antag_datum(/datum/antagonist/goon_vampire)
 				g_vamp.give_objectives()
-				to_chat(usr, "<span class='notice'>Для вампира [key] сгенерированы задания. Вы можете отредактировать и объявить их вручную.</span>")
+				to_chat(usr, "<span class='notice'>The objectives for vampire [key] have been generated. You can edit them and announce manually.</span>")
 				log_admin("[key_name(usr)] has automatically forged objectives for [key_name(current)]")
 				message_admins("[key_name_admin(usr)] has automatically forged objectives for [key_name_admin(current)]")
 

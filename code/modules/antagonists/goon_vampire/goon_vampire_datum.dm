@@ -52,16 +52,17 @@
 /datum/antagonist/goon_vampire/greet()
 	var/dat
 	SEND_SOUND(owner.current, 'sound/ambience/antag/vampalert.ogg')
-	dat = "<span class='danger'>Вы — вампир!</span><br>"
-	dat += {"Чтобы укусить кого-то, нацельтесь в голову, выберите намерение вреда (4) и ударьте пустой рукой. Пейте кровь, чтобы получать новые силы.<br>Вы уязвимы перед святостью и звёздным светом. Не выходите в космос, избегайте священника, церкви и, особенно, святой воды."}
+	dat = "<span class='danger'>You are a Vampire!/span><br>"
+	dat += {"To bite someone, target the head and use harm intent with an empty hand. Drink blood to gain new powers. \
+	You are weak to holy things and starlight. Don't go into space and avoid the Chaplain, the chapel and especially Holy Water."}
 	to_chat(owner.current, dat)
 
 
 /datum/antagonist/goon_vampire/farewell()
 	if(issilicon(owner.current))
-		to_chat(owner.current, span_userdanger("Вы превратились в робота! Вы чувствуете как вампирские силы исчезают…"))
+		to_chat(owner.current, span_userdanger("You have been turned into a robot! You can feel your powers fading away..."))
 	else
-		to_chat(owner.current, span_userdanger("Ваш разум очищен! Вы больше не вампир."))
+		to_chat(owner.current, span_userdanger("You have been brainwashed! You are no longer a vampire."))
 
 
 /datum/antagonist/goon_vampire/give_objectives()
@@ -109,7 +110,7 @@
 		var/datum/hud/hud = owner.current.hud_used
 		if(!hud.vampire_blood_display)
 			hud.vampire_blood_display = new /obj/screen()
-			hud.vampire_blood_display.name = "Доступная кровь"
+			hud.vampire_blood_display.name = "Usable Blood"
 			hud.vampire_blood_display.icon_state = "blood_display"
 			hud.vampire_blood_display.screen_loc = "WEST:6,CENTER-1:15"
 			hud.static_inventory += hud.vampire_blood_display
@@ -152,16 +153,16 @@
 	if(prob(burn_chance) && owner.current.health >= 50)
 		switch(owner.current.health)
 			if(75 to 100)
-				to_chat(owner.current, span_warning("Ваша кожа дымится…"))
+				to_chat(owner.current, span_warning("Your skin flakes away..."))
 			if(50 to 75)
-				to_chat(owner.current, span_warning("Ваша кожа шипит!"))
+				to_chat(owner.current, span_warning("Your skin sizzles!"))
 		owner.current.adjustFireLoss(3)
 	else if(owner.current.health < 50)
 		if(!owner.current.on_fire)
-			to_chat(owner.current, span_danger("Ваша кожа загорается!"))
+			to_chat(owner.current, span_danger("Your skin catches fire!"))
 			owner.current.emote("scream")
 		else
-			to_chat(owner.current, span_danger("Вы продолжаете гореть!"))
+			to_chat(owner.current, span_danger("You continue to burn!"))
 		owner.current.adjust_fire_stacks(5)
 		owner.current.IgniteMob()
 
@@ -185,11 +186,11 @@
 		if(T.density)
 			return
 	if(bloodusable >= 10)	//burn through your blood to tank the light for a little while
-		to_chat(owner.current, span_warning("Свет звёзд жжётся и истощает ваши силы!"))
+		to_chat(owner.current, span_warning("The starlight saps your strength!"))
 		bloodusable -= 10
 		vamp_burn(10)
 	else		//You're in trouble, get out of the sun NOW
-		to_chat(owner.current, span_userdanger("Ваше тело обугливается, превращаясь в пепел! Укройтесь от звёздного света!"))
+		to_chat(owner.current, span_userdanger("Your body is turning to ash, get out of the light now!"))
 		owner.current.adjustCloneLoss(10)	//I'm melting!
 		vamp_burn(85)
 
@@ -265,20 +266,20 @@
 	var/blood_volume_warning = 9999 //Blood volume threshold for warnings
 	if(owner.current.is_muzzled())
 		var/mob/living/carbon/mask_owner = owner
-		to_chat(owner.current, span_warning("[mask_owner.wear_mask] мешает вам укусить [H]!"))
+		to_chat(owner.current, span_warning("[mask_owner.wear_mask] prevents you from biting [H]!"))
 		draining = null
 		return
 	add_attack_logs(owner.current, H, "vampirebit & is draining their blood.", ATKLOG_ALMOSTALL)
-	owner.current.visible_message(span_danger("[owner.current] грубо хватает шею [H] и вонзает в неё клыки!"), \
-								span_danger("Вы вонзаете клыки в шею [H] и начинаете высасывать [genderize_ru(H.gender, "его", "её", "его", "их")] кровь."), \
-								span_italics("Вы слышите тихий звук прокола и влажные хлюпающие звуки."))
+	owner.visible_message(span_danger("[owner] grabs [H]'s neck harshly and sinks in [owner.p_their()] fangs!"), \
+							span_danger("You sink your fangs into [H] and begin to drain [owner.p_their()] blood."), \
+							span_notice("You hear a soft puncture and a wet sucking noise."))
 	if(!iscarbon(owner.current))
 		H.LAssailant = null
 	else
 		H.LAssailant = owner.current
 	while(do_mob(owner.current, H, 5 SECONDS))
 		if(!isvampire(owner))
-			to_chat(owner.current, span_userdanger("Ваши клыки исчезают!"))
+			to_chat(owner.current, span_userdanger("Your fangs have disappeared!"))
 			return
 		old_bloodtotal = bloodtotal
 		old_bloodusable = bloodusable
@@ -301,7 +302,7 @@
 
 		if(old_bloodtotal != bloodtotal)
 			if(H.ckey || H.player_ghosted) // Requires ckey regardless if monkey or human, and has not ghosted, otherwise no power
-				to_chat(owner.current, span_boldnotice("Вы накопили [bloodtotal] единиц[declension_ru(bloodtotal, "у", "ы", "")] крови[bloodusable != old_bloodusable ? ", и теперь вам доступно [bloodusable] единиц[declension_ru(bloodusable, "а", "ы", "")] крови" : ""]."))
+				to_chat(owner.current, span_boldnotice("You have accumulated [bloodtotal] [bloodtotal > 1 ? "units" : "unit"] of blood[bloodusable != old_bloodusable ? ", and have [bloodusable] left to use" : ""]."))
 
 		check_vampire_upgrade()
 		H.blood_volume = max(H.blood_volume - 25, 0)
@@ -314,24 +315,24 @@
 		//Blood level warnings (Code 'borrowed' from Fulp)
 		if(H.blood_volume)
 			if(H.blood_volume <= BLOOD_VOLUME_BAD && blood_volume_warning > BLOOD_VOLUME_BAD)
-				to_chat(owner.current, span_danger("У вашей жертвы остаётся опасно мало крови!"))
+				to_chat(owner.current, span_danger("Your victim's blood volume is dangerously low."))
 			else if(H.blood_volume <= BLOOD_VOLUME_OKAY && blood_volume_warning > BLOOD_VOLUME_OKAY)
-				to_chat(owner.current, span_warning("У вашей жертвы остаётся тревожно мало крови."))
+				to_chat(owner.current, span_warning("Your victim's blood is at an unsafe level."))
 			blood_volume_warning = H.blood_volume //Set to blood volume, so that you only get the message once
 		else
-			to_chat(owner.current, span_warning("Вы выпили свою жертву досуха!"))
+			to_chat(owner.current, span_warning("You have bled your victim dry!"))
 			break
 
 		if(ishuman(owner.current))
 			var/mob/living/carbon/human/V = owner.current
 			if(!H.ckey && !H.player_ghosted)//Only runs if there is no ckey and the body has not being ghosted while alive
-				to_chat(V, span_boldnotice("Питьё крови у [H] насыщает вас, но доступной крови от этого вы не получаете."))
+				to_chat(V, span_boldnotice("Feeding on [H] reduces your thirst, but you get no usable blood from them."))
 				V.set_nutrition(min(NUTRITION_LEVEL_WELL_FED, V.nutrition + 5))
 			else
 				V.set_nutrition(min(NUTRITION_LEVEL_WELL_FED, V.nutrition + (blood / 2)))
 
 	draining = null
-	to_chat(owner.current, span_notice("Вы прекращаете пить кровь [H.name]."))
+	to_chat(owner.current, span_notice("You stop draining [H.name] of blood."))
 
 
 /datum/antagonist/goon_vampire/vv_edit_var(var_name, var_value)

@@ -16,23 +16,23 @@
 
 	if(user.stat >= DEAD)
 		if(show_message)
-			to_chat(user, span_warning("Но вы же мертвы!"))
+			to_chat(user, span_warning("Not when you're dead!"))
 		return FALSE
 
 	if(vampire.nullified && !fullpower)
 		if(show_message)
-			to_chat(user, span_warning("Что-то блокирует ваши силы!"))
+			to_chat(user, span_warning("Something is blocking your powers!"))
 		return FALSE
 
 	if(vampire.bloodusable < required_blood)
 		if(show_message)
-			to_chat(user, span_warning("Для этого вам потребуется не менее [required_blood] единиц крови!"))
+			to_chat(user, span_warning("You require at least [required_blood] units of usable blood to do that!"))
 		return FALSE
 
 	//chapel check
 	if(is_type_in_typecache(get_area(user), GLOB.holy_areas) && !fullpower)
 		if(show_message)
-			to_chat(user, span_warning("Ваши силы не действуют на этой святой земле."))
+			to_chat(user, span_warning("Your powers are useless on this holy ground."))
 		return FALSE
 
 	return TRUE
@@ -62,7 +62,7 @@
 		return
 
 	var/datum/antagonist/goon_vampire/vamp = user?.mind?.has_antag_datum(/datum/antagonist/goon_vampire)
-	to_chat(user, span_boldnotice("У Вас осталось [vamp.bloodusable] единиц крови."))
+	to_chat(user, span_boldnotice("You have [vampire.bloodusable] left to use"))
 
 
 /*******************
@@ -142,7 +142,7 @@
 
 /obj/effect/proc_holder/spell/goon_vampire/self/rejuvenate
 	name = "Восстановление"
-	desc= "Используйте накопленную кровь, чтобы влить в тело новые силы, устраняя любое ошеломление"
+	desc = "Use reserve blood to enliven your body, removing any incapacitating effects."
 	action_icon_state = "vampire_rejuvinate_old"
 	base_cooldown = 20 SECONDS
 	stat_allowed = UNCONSCIOUS
@@ -159,7 +159,7 @@
 	user.lying = FALSE
 	user.resting = FALSE
 	user.update_canmove()
-	to_chat(user, span_notice("Ваше тело наполняется чистой кровью, снимая все ошеломляющие эффекты."))
+	to_chat(user, span_notice("You instill your body with clean blood and remove any incapacitating effects."))
 	var/datum/antagonist/goon_vampire/vampire = user.mind.has_antag_datum(/datum/antagonist/goon_vampire)
 	if(vampire?.get_ability(/datum/goon_vampire_passive/regen))
 		effect_timer = addtimer(CALLBACK(src, PROC_REF(rejuvenate_effect), user), 3.5 SECONDS, TIMER_STOPPABLE|TIMER_LOOP)
@@ -182,7 +182,7 @@
 
 /obj/effect/proc_holder/spell/goon_vampire/targetted/hypnotise
 	name = "Гипноз"
-	desc= "Пронзающий взгляд, ошеломляющий жертву на довольно долгое время"
+	desc= "A piercing stare that incapacitates your victim for a good length of time."
 	action_icon_state = "vampire_hypnotise"
 	required_blood = 25
 
@@ -190,14 +190,14 @@
 /obj/effect/proc_holder/spell/goon_vampire/targetted/hypnotise/cast(list/targets, mob/living/carbon/human/user = usr)
 	var/mob/living/carbon/human/target = targets[1]
 
-	user.visible_message(span_warning("Глаза [user] ярко вспыхивают, когда он[genderize_ru(user.gender,"","а","о","и")] пристально смотр[genderize_ru(user.gender,"ит","ит","ит","ят")] в глаза [target]."))
+	user.visible_message(span_warning("[user]'s eyes flash briefly as [user.p_they()] stare[user.p_s()] into [target]'s eyes"))
 	if(do_mob(user, target, 6 SECONDS))
 		if(!affects(target))
-			to_chat(user, span_warning("Ваш пронзительный взгляд не смог заворожить [target]."))
-			to_chat(target, span_notice("Невыразительный взгляд [user] ничего вам не делает."))
+			to_chat(user, span_warning("Your piercing gaze fails to knock out [target]."))
+			to_chat(target, span_notice("[user]'s feeble gaze is ineffective."))
 		else
-			to_chat(user, span_warning("Ваш пронзающий взгляд завораживает [target]."))
-			to_chat(target, span_warning("Вы чувствуете сильную слабость."))
+			to_chat(user, span_warning("Your piercing gaze knocks out [target]."))
+			to_chat(target, span_warning("You suddenly feel very weak."))
 			target.SetSleeping(40 SECONDS)
 	else
 		revert_cast(user)
@@ -206,7 +206,7 @@
 
 /obj/effect/proc_holder/spell/goon_vampire/targetted/disease
 	name = "Заражающее касание"
-	desc = "Ваше касание инфицирует кровь жертвы, заражая её могильной лихорадкой. Пока лихорадку не вылечат, жертва будет с трудом держаться на ногах, а её кровь будет наполняться токсинами."
+	desc = "Touches your victim with infected blood giving them Grave Fever, which will, left untreated, causes toxic building and frequent collapsing."
 	gain_desc = "Вы получили способность «Заражающее касание». Она позволит вам ослаблять тех, кого вы коснётесь до тех пор, пока их не вылечат."
 	action_icon_state = "vampire_disease"
 	required_blood = 50
@@ -215,10 +215,10 @@
 /obj/effect/proc_holder/spell/goon_vampire/targetted/disease/cast(list/targets, mob/living/carbon/human/user = usr)
 	var/mob/living/carbon/human/target = targets[1]
 
-	to_chat(user, span_warning("Вы незаметно инфицируете [target] заражающим касанием."))
+	to_chat(user, span_warning("You stealthily infect [target] with your diseased touch."))
 	target.help_shake_act(user)
 	if(!affects(target))
-		to_chat(user, span_warning("Вам кажется, что заражающее касание не подействовало на [target]."))
+		to_chat(user, span_warning("They seem to be unaffected."))
 		return
 
 	var/datum/disease/vampire/virus = new
@@ -227,7 +227,7 @@
 
 /obj/effect/proc_holder/spell/goon_vampire/glare
 	name = "Вспышка"
-	desc = "Вы сверкаете глазами, ненадолго ошеломляя всех людей вокруг"
+	desc = "A scary glare that incapacitates people for a short while around you."
 	action_icon_state = "vampire_glare_old"
 	base_cooldown = 30 SECONDS
 	stat_allowed = UNCONSCIOUS
@@ -246,10 +246,10 @@
 		return
 
 	if(istype(user.glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
-		to_chat(user, span_warning("У вас на глазах повязка!"))
+		to_chat(user, span_warning("You're blindfolded!"))
 		return
 
-	user.visible_message(span_warning("Глаза [user] ослепительно вспыхивают!"))
+	user.visible_message(span_warning("[user]'s eyes emit a blinding flash!"))
 
 	for(var/mob/living/carbon/human/target in targets)
 		if(!affects(target))
@@ -266,7 +266,7 @@
 		target.Weaken(4 SECONDS)
 		target.AdjustStuttering(40 SECONDS)
 		target.adjustStaminaLoss(20)
-		to_chat(target, span_userdanger("Вы ослеплены вспышкой из глаз [user]."))
+		to_chat(target, span_userdanger("You are blinded by [user]'s glare."))
 		add_attack_logs(user, target, "(Vampire) слепит")
 		target.apply_status_effect(STATUS_EFFECT_STAMINADOT)
 

@@ -241,27 +241,27 @@
 
 /obj/screen/alert/hunger/fat/vampire
 	name = "Ожирение"
-	desc = "Вы выпили столько крови, что пузо уже не влезает в штаны. Бегайте теперь по станции кругами, чтобы похудеть."
+	desc = "You somehow drank too much blood, lardass. Run around the station and lose some weight."
 
 /obj/screen/alert/hunger/full/vampire
 	name = "Пресыщение"
-	desc = "Вы чувствуете спокойствие и приятную насыщенность. Но жажда крови обязательно вернётся…"
+	desc = "You feel full and satisfied, but you know you will thirst for more blood soon..."
 
 /obj/screen/alert/hunger/well_fed/vampire
 	name = "Сытость"
-	desc = "Вы вполне сыты, но могли бы выпить ещё немного крови."
+	desc = "You feel quite satisfied, but you could do with a bit more blood."
 
 /obj/screen/alert/hunger/fed/vampire
 	name = "Удовлетворённость"
-	desc = "Вы не голодны, но испить ещё немного крови не помешало бы."
+	desc = "You feel moderately satisfied, but a bit more blood wouldn't hurt."
 
 /obj/screen/alert/hunger/hungry/vampire
 	name = "Недоедание"
-	desc = "Вы жаждете отведать свежей крови."
+	desc = "You currently thirst for blood."
 
 /obj/screen/alert/hunger/starving/vampire
 	name = "Жажда"
-	desc = "Вас наполняет жажда. Она приносит физическую боль. Вам тяжело передвигаться."
+	desc = "You're severely thirsty. The thirst pains make moving around a chore."
 
 /// End of Vampire "hunger"
 
