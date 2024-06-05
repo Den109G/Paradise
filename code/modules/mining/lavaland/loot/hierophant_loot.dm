@@ -438,6 +438,7 @@
 /obj/effect/proc_holder/spell/hierophant_talisman_teleport/create_new_targeting()
 	var/datum/spell_targeting/click/T = new()
 	T.allowed_type = /turf/simulated
+	T.disallowed_type = /turf/simulated/wall
 	T.range = 3
 	T.use_turf_of_user = TRUE
 	return T

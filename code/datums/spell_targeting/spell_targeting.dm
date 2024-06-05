@@ -14,6 +14,8 @@
 	var/max_targets = 1
 	/// Which type the targets have to be
 	var/allowed_type = /mob/living/carbon/human
+	/// Which type the targets dont have to be
+	var/disallowed_type = null
 	/// If it includes user. Not always used in all spell_targeting objects
 	var/include_user = FALSE
 	/// Whether or not the targeting is done by intercepting a click or not
@@ -85,7 +87,7 @@
  */
 /datum/spell_targeting/proc/valid_target(target, user, obj/effect/proc_holder/spell/spell, check_if_in_range = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
-	return istype(target, allowed_type) && (include_user || target != user) && \
+	return istype(target, allowed_type) && (!disallowed_type || !istype(target, disallowed_type)) (include_user || target != user) && \
 		spell.valid_target(target, user) && (!check_if_in_range || (target in view_or_range(range, use_turf_of_user ? get_turf(user) : user, selection_type))) \
 		&& (!use_obstacle_check || is_path_exist(user, target, PASSTABLE|PASSFENCE))
 
