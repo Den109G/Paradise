@@ -21,9 +21,9 @@
 
 	var/turf/target = get_turf(src)
 	if(multiz_dir == MULTIZ_PIPE_UP)
-		target = GET_TURF_ABOVE(get_turf(src)) //Get the turf above us
+		target = GET_TURF_ABOVE(target) //Get the turf above us
 	if(multiz_dir == MULTIZ_PIPE_DOWN)
-		target = GET_TURF_BELOW(get_turf(src))
+		target = GET_TURF_BELOW(target)
 	if(!target)
 		expel(H, loc)
 		return //Nothing located.
