@@ -580,6 +580,12 @@
 		else
 			to_chat(src, "<span class='notice'>You are not Superman.<span>")
 		return
+	var/crawl_overlay = image('icons/effects/vent_indicator.dmi', "arrow", ABOVE_MOB_LAYER, dir = NORTH)
+	add_overlay(crawl_overlay)
+	if(!do_after(src, 2 SECONDS, target = src))
+		cut_overlay(crawl_overlay)
+		return FALSE
+	cut_overlay(crawl_overlay)
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move upwards."))
 
@@ -601,6 +607,13 @@
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, DOWN)
 
+	var/crawl_overlay = image('icons/effects/vent_indicator.dmi', "arrow", ABOVE_MOB_LAYER, dir = SOUTH)
+	cut_overlay(crawl_overlay)
+	add_overlay(crawl_overlay)
+	if(!do_after(src, 2 SECONDS, target = src))
+		cut_overlay(crawl_overlay)
+		return FALSE
+	cut_overlay(crawl_overlay)
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : NONE
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move down."))
