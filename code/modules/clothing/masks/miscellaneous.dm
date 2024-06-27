@@ -20,7 +20,7 @@
 		SPECIES_WOLPIN = list(ITEM_SLOT_MASK_STRING = 'icons/mob/clothing/species/monkey/mask.dmi'),
 		SPECIES_NEARA = list(ITEM_SLOT_MASK_STRING = 'icons/mob/clothing/species/monkey/mask.dmi'),
 		SPECIES_STOK = list(ITEM_SLOT_MASK_STRING = 'icons/mob/clothing/species/monkey/mask.dmi')
-	)
+		)
 
 // Clumsy folks can't take the mask off themselves.
 /obj/item/clothing/mask/muzzle/attack_hand(mob/user)
@@ -350,7 +350,7 @@
 		SPECIES_WOLPIN = list(ITEM_SLOT_MASK_STRING = 'icons/mob/clothing/species/monkey/mask.dmi'),
 		SPECIES_NEARA = list(ITEM_SLOT_MASK_STRING = 'icons/mob/clothing/species/monkey/mask.dmi'),
 		SPECIES_STOK = list(ITEM_SLOT_MASK_STRING = 'icons/mob/clothing/species/monkey/mask.dmi')
-	)
+		)
 
 /obj/item/clothing/mask/horsehead/equipped(mob/user, slot, initial)
 	. = ..()
@@ -393,7 +393,7 @@
 	item_state = "rat"
 	sprite_sheets = list(
 		SPECIES_VULPKANIN = list(ITEM_SLOT_HEAD_STRING = 'icons/mob/clothing/species/vulpkanin/head.dmi')
-	)
+		)
 
 /obj/item/clothing/mask/face/fox
 	name = "fox mask"
@@ -402,7 +402,7 @@
 	item_state = "fox"
 	sprite_sheets = list(
 		SPECIES_VULPKANIN = list(ITEM_SLOT_HEAD_STRING = 'icons/mob/clothing/species/vulpkanin/head.dmi')
-	)
+		)
 
 /obj/item/clothing/mask/face/bee
 	name = "bee mask"
@@ -411,7 +411,7 @@
 	item_state = "bee"
 	sprite_sheets = list(
 		SPECIES_VULPKANIN = list(ITEM_SLOT_HEAD_STRING = 'icons/mob/clothing/species/vulpkanin/head.dmi')
-	)
+		)
 
 /obj/item/clothing/mask/face/bear
 	name = "bear mask"
@@ -447,7 +447,7 @@
 	item_state = "jackal"
 	sprite_sheets = list(
 		SPECIES_VULPKANIN = list(ITEM_SLOT_HEAD_STRING = 'icons/mob/clothing/species/vulpkanin/head.dmi')
-	)
+		)
 
 /obj/item/clothing/mask/face/tribal
 	name = "tribal mask"
@@ -456,7 +456,7 @@
 	item_state = "bumba"
 	sprite_sheets = list(
 		SPECIES_VULPKANIN = list(ITEM_SLOT_HEAD_STRING = 'icons/mob/clothing/species/vulpkanin/head.dmi')
-	)
+		)
 
 /obj/item/clothing/mask/face/fawkes
 	name = "Guy Fawkes mask"
@@ -466,7 +466,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	sprite_sheets = list(
 		SPECIES_VULPKANIN = list(ITEM_SLOT_HEAD_STRING = 'icons/mob/clothing/species/vulpkanin/head.dmi')
-	)
+		)
 
 /obj/item/clothing/mask/gas/clown_hat/pennywise
 	name = "Pennywise Mask"
@@ -475,7 +475,7 @@
 	item_state = "pennywise_mask"
 	sprite_sheets = list(
 		SPECIES_VULPKANIN = list(ITEM_SLOT_HEAD_STRING = 'icons/mob/clothing/species/vulpkanin/head.dmi')
-	)
+		)
 
 
 /obj/item/clothing/mask/gas/clown_hat/rockso
@@ -500,7 +500,7 @@
 		SPECIES_GREY = list(ITEM_SLOT_MASK_STRING = 'icons/mob/clothing/species/grey/mask.dmi'),
 		SPECIES_KIDAN = list(ITEM_SLOT_MASK_STRING = 'icons/mob/clothing/species/kidan/mask.dmi'),
 		SPECIES_WRYN = list(ITEM_SLOT_MASK_STRING = 'icons/mob/clothing/species/wryn/mask.dmi')
-	)
+		)
 
 
 // Bandanas
