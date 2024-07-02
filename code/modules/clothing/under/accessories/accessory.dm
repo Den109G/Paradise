@@ -190,6 +190,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -701,7 +705,14 @@
 		SPECIES_DRASK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/drask/suit.dmi'),
 		SPECIES_GREY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/grey/suit.dmi'),
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_UNATHI = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/unathi/suit.dmi'),
+		SPECIES_ASHWALKER_BASIC = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/unathi/suit.dmi'),
+		SPECIES_ASHWALKER_SHAMAN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/unathi/suit.dmi'),
+		SPECIES_DRACONOID = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/unathi/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -714,6 +725,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -725,6 +740,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -736,6 +755,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -747,6 +770,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -758,6 +785,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -769,6 +800,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -780,6 +815,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -791,6 +830,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -802,6 +845,10 @@
 
 	sprite_sheets = list(
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
@@ -815,6 +862,10 @@
 		SPECIES_DRASK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/drask/suit.dmi'),
 		SPECIES_GREY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/grey/suit.dmi'),
 		SPECIES_MONKEY = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_FARWA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_WOLPIN = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_NEARA = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
+		SPECIES_STOK = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/monkey/suit.dmi'),
 		SPECIES_VOX = list(ITEM_SLOT_ACCESSORY_STRING = 'icons/mob/clothing/species/vox/suit.dmi')
 		)
 
