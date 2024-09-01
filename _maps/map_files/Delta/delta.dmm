@@ -93623,8 +93623,9 @@
 /area/engine/engineering)
 "qDc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table/wood{
-	flipped = 1
+/obj/structure/table/wood,
+/obj/effect/mapping_helpers/table_flip{
+	dir = 8
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plasteel{

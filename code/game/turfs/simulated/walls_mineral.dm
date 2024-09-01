@@ -98,6 +98,7 @@
 	base_icon_state = "plasma_wall"
 	canSmoothWith = SMOOTH_GROUP_PLASMA_WALLS
 	smoothing_groups = SMOOTH_GROUP_PLASMA_WALLS
+	smooth = SMOOTH_BITMASK
 
 
 /turf/simulated/wall/mineral/plasma/attackby(obj/item/I, mob/user, params)
@@ -154,6 +155,7 @@
 	base_icon_state = "plasma_wall"
 	canSmoothWith = SMOOTH_GROUP_PLASMA_WALLS
 	smoothing_groups = SMOOTH_GROUP_PLASMA_WALLS
+	smooth = SMOOTH_BITMASK
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 
 /turf/simulated/wall/mineral/wood
@@ -194,10 +196,12 @@
 	desc = "A wall with rough metal plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron"
+	base_icon_state = "iron_wall"
 	sheet_type = /obj/item/stack/rods
 	sheet_amount = 5
 	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
 	smoothing_groups = SMOOTH_GROUP_IRON_WALLS
+	smooth = SMOOTH_BITMASK
 
 /turf/simulated/wall/mineral/abductor
 	name = "alien wall"
@@ -225,6 +229,7 @@
 	base_icon_state = "gingerbread_wall"
 	canSmoothWith = SMOOTH_GROUP_WALL_GINGERBREAD
 	smoothing_groups = SMOOTH_GROUP_WALL_GINGERBREAD
+	smooth = SMOOTH_BITMASK
 
 /////////////////////Titanium walls/////////////////////
 

@@ -120,6 +120,17 @@
 	T.light_range = light_range
 	. = ..()
 
+/obj/effect/mapping_helpers/table_flip //used to flip tables. That's all.
+	name = "Table flip"
+	icon_state = "table_flip"
+	late = TRUE
+
+/obj/effect/mapping_helpers/table_flip/LateInitialize()
+	var/obj/structure/table/to_flip = locate(/obj/structure/table) in range(1, src)
+	if(to_flip)
+		to_flip.flip(dir, FALSE)
+	qdel(src)
+
 // Used by mapmerge2 to denote the existence of a merge conflict (or when it has to complete a "best intent" merge where it dumps the movable contents of an old key and a new key on the same tile).
 // We define it explicitly here to ensure that it shows up on the highest possible plane (while giving off a verbose icon) to aide mappers in resolving these conflicts.
 // DO NOT USE THIS IN NORMAL MAPPING!!! Linters WILL fail.
