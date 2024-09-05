@@ -395,8 +395,9 @@
 	if(throw_around) //only visually change table
 		var/list/targets = list(get_step(src, dir), get_step(src, turn(dir, 45)), get_step(src, turn(dir, -45)))
 		for(var/atom/movable/thing in get_turf(src))
-			if(!thing.anchored)
-				INVOKE_ASYNC(thing, TYPE_PROC_REF(/atom/movable, throw_at), pick(targets), 1, 1)
+			if(thing.anchored)
+				continue
+			INVOKE_ASYNC(thing, TYPE_PROC_REF(/atom/movable, throw_at), pick(targets), 1, 1)
 
 	dir = direction
 	if(dir != NORTH)

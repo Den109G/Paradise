@@ -123,9 +123,10 @@
 /obj/effect/mapping_helpers/table_flip //used to flip tables. That's all.
 	name = "Table flip"
 	icon_state = "table_flip"
-	late = TRUE
+	late = TRUE //initialize table and loot first
 
 /obj/effect/mapping_helpers/table_flip/LateInitialize()
+	. = ..()
 	var/obj/structure/table/to_flip = locate(/obj/structure/table) in range(1, src)
 	if(to_flip)
 		to_flip.flip(dir, FALSE)
