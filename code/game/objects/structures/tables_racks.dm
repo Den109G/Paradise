@@ -383,6 +383,8 @@
 		if(climbable)
 			structure_shaken()
 	else
+		if(!do_after(user, 1 SECONDS, src))
+			return
 		if(!unflip())
 			to_chat(user, span_notice("It won't budge."))
 
