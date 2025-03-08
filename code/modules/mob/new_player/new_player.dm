@@ -644,6 +644,8 @@
 
 	new_character.set_key(key)		// Manually transfer the key to log them in
 
+	doom_transition(new_character)
+
 	return new_character
 
 // This is to check that the player only has preferences set that they're supposed to
