@@ -610,6 +610,7 @@
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 /mob/new_player/proc/create_character()
+	doom_transition(src)
 	spawning = TRUE
 	close_spawn_windows()
 
