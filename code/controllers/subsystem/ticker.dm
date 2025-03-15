@@ -504,7 +504,6 @@ SUBSYSTEM_DEF(ticker)
 			else
 				player.create_character()
 				qdel(player)
-	//addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clear_transition)), 10 SECONDS) //seems like enough time
 
 
 /datum/controller/subsystem/ticker/proc/equip_characters()

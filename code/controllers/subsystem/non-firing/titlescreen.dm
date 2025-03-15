@@ -13,6 +13,8 @@ SUBSYSTEM_DEF(title)
 	var/datum/title_screen/current_title_screen
 	/// The list of image files available to be picked for title screen
 	var/list/title_images_pool = list()
+	/// April Fools hack, fix it before making it permanent change
+	var/icon/image_for_screen
 
 /datum/controller/subsystem/title/Initialize()
 	import_html()
@@ -183,6 +185,7 @@ SUBSYSTEM_DEF(title)
 	if(!isfile(screen_image_file))
 		screen_image_file = fcopy_rsc(screen_image_file)
 
+	SStitle.image_for_screen = new /icon(screen_image_file)
 	screen_image = SSassets.transport.register_asset("[screen_image_file]", screen_image_file)
 
 /datum/title_screen/proc/update_character(client/viewer)
