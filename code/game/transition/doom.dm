@@ -2,7 +2,8 @@
 GLOBAL_LIST_EMPTY(transition_screens)
 
 
-//Doesn't work with every resolution
+// Doesn't work with every resolution
+// and easily messes up, if you move chat manually
 #define ui_transition "CENTER-7, CENTER-7"
 
 /*
@@ -11,7 +12,7 @@ GLOBAL_LIST_EMPTY(transition_screens)
 *if no/wrong player provided - nuke
 */
 /proc/clear_transition(mob/player)
-	if(player && LAZYFIND(GLOB.transition_screens, "[player]")) //maybe we cleared already?
+	if(player && LAZYIN(GLOB.transition_screens, "[player]")) //maybe we cleared already?
 		var/screen = GLOB.transition_screens["[player]"]
 		qdel(screen)
 		return TRUE
@@ -27,7 +28,7 @@ GLOBAL_LIST_EMPTY(transition_screens)
 */
 
 /mob/proc/force_doom()
-	return doom_transition(src)
+	return transition(src, "DOOM")
 
 
 /atom/movable/screen/transition
@@ -48,33 +49,24 @@ GLOBAL_LIST_EMPTY(transition_screens)
 	transition.name = "Let this secret stay between you and me, m'kay?"
 
 
-#define TRANSITION_ICON_SIZE 480
-#define TRANSITION_RESOLUTION 15
-#define TRANSITION_CENTER_X round(TRANSITION_ICON_SIZE / 2)
-#define TRANSITION_CENTER_Y round(TRANSITION_ICON_SIZE / 2)
 
 /*
 * Copies player's screen (title screen for now) and applies "melting effect"
 *	player - whose screen we are changing
 */
-/proc/doom_transition(mob/player)
-	if(!player || !ismob(player)) //question every arg, even for one-day joke
+/proc/transition(mob/player, var/type = "DOOM")
+	if(!type || !player || !ismob(player)) //question every arg, even for one-day joke
 		return FALSE
 
 	var/image/image_to_use = get_screen_for_transition()
 	image_to_use.loc = player.hud_used.transition
-	//image_to_use.pixel_x = TRANSITION_CENTER_X
-	//image_to_use.pixel_y = TRANSITION_CENTER_Y
 	GLOB.transition_screens["[player]"] = image_to_use
+	image_to_use.add_filter("transition_effect", 1, displacement_map_filter(render_source = get_mask_for_transition()))
 
 	player.client.screen |= player.hud_used.transition
 	player.client.images |= image_to_use
 	return TRUE
 
-#undef TRANSITION_ICON_SIZE
-#undef TRANSITION_RESOLUTION
-#undef TRANSITION_CENTER_X
-#undef TRANSITION_CENTER_Y
 
 /proc/get_screen_for_transition()
 	/* is not working cause its stores assets like "asset.[ID].geef", which server can't find
@@ -86,3 +78,13 @@ GLOBAL_LIST_EMPTY(transition_screens)
 	//fix me
 	var/icon_to_use = SStitle.image_for_screen
 	return new /image(icon_to_use) //create new image, cause we don't wanna ruin other's experience
+
+#define TRANSITION_ICON_PATH "icons/transitions"
+
+/proc/get_mask_for_transition(var/type = "DOOM")
+	var/icon_path = "[TRANSITION_ICON_PATH]/[type]"
+	var/icon/mask = icon(icon_path, "[rand(1, 2)]")
+	mask.Scale(38) //files are 16x16 (1/2 tile), so to fill 19x17 view they need to be 38 times larger
+	if(rand(50))
+		mask.Scale(-1)
+	return mask

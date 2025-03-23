@@ -610,7 +610,6 @@
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 /mob/new_player/proc/create_character()
-	doom_transition(src)
 	spawning = TRUE
 	close_spawn_windows()
 
@@ -645,7 +644,7 @@
 
 	new_character.set_key(key)		// Manually transfer the key to log them in
 
-	doom_transition(new_character)
+	transition(new_character, "Doom")
 
 	return new_character
 
