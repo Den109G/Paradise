@@ -144,7 +144,7 @@
 		span_notice("You start to construct the cable terminal for the SMES..."),
 	)
 	coil.play_tool_sound(src)
-	if(!do_after(user, 5 SECONDS * coil.toolspeed, src, category = DA_CAT_TOOL) || (panel_check && !panel_open) || !terminal_turf.can_have_cabling() || terminal_turf.underfloor_accessibility == UNDERFLOOR_INTERACTABLE || QDELETED(coil))
+	if(!do_after(user, 5 SECONDS * coil.toolspeed, src, category = DA_CAT_TOOL) || (panel_check && !panel_open) || !terminal_turf.can_have_cabling() || (terminal_turf.underfloor_accessibility == UNDERFLOOR_INTERACTABLE) || QDELETED(coil))
 		return FALSE
 	var/obj/structure/cable/node = terminal_turf.get_cable_node()
 	if(check_electrocute(user, node, node))

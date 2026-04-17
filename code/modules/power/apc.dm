@@ -638,7 +638,7 @@
 			span_notice("You start to construct the cable terminal beneath the APC frame..."),
 		)
 		coil.play_tool_sound(src)
-		if(!do_after(user, 2 SECONDS * coil.toolspeed, src, category = DA_CAT_TOOL) || opened == APC_CLOSED || terminal || !host_turf.can_have_cabling() || host_turf.underfloor_accessibility == UNDERFLOOR_INTERACTABLE || !has_electronics() || QDELETED(coil))
+		if(!do_after(user, 2 SECONDS * coil.toolspeed, src, category = DA_CAT_TOOL) || opened == APC_CLOSED || terminal || !host_turf.can_have_cabling() || (host_turf.underfloor_accessibility == UNDERFLOOR_INTERACTABLE) || !has_electronics() || QDELETED(coil))
 			return ATTACK_CHAIN_PROCEED
 		var/obj/structure/cable/node = host_turf.get_cable_node()
 		if(prob(50) && electrocute_mob(user, node, node, 1, TRUE))
